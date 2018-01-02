@@ -2,7 +2,7 @@
 
 namespace Inert\Exception;
 
-interface InertExceptionInterface
+interface ExceptionInterface
 {
 
 }
