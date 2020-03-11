@@ -3,9 +3,9 @@
 namespace Inert;
 
 use Exception;
-use Inert\Exception\ActionNotFoundException;
-use Inert\Exception\ControllerNotFoundException;
-use Inert\Exception\ServiceNotFoundException;
+use Inert\Exception\ActionNotFound;
+use Inert\Exception\ControllerNotFound;
+use Inert\Exception\ServiceNotFound;
 
 class Application
 {
@@ -21,8 +21,8 @@ class Application
         try {
             try {
                 $controller = $this->dic->get($this->query('controller', 'Index') . 'Controller');
-            } catch (ServiceNotFoundException $ex) {
-                throw new ControllerNotFoundException();
+            } catch (ServiceNotFound $ex) {
+                throw new ControllerNotFound();
             }
 
             $action = $this->query('action', 'index') . 'Action';
@@ -30,7 +30,7 @@ class Application
             if (method_exists($controller, $action)) {
                 $controller->$action();
             } else {
-                throw new ActionNotFoundException();
+                throw new ActionNotFound();
             }
         } catch (Exception $ex) {
             (new ErrorController($ex))->indexAction();

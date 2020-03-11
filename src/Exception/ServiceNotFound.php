@@ -2,7 +2,7 @@
 
 namespace Inert\Exception;
 
-class ServiceNotFoundException extends \DomainException implements ExceptionInterface
+class ServiceNotFound extends \DomainException implements ExceptionInterface
 {
     protected $message = 'Service can not be found.';
 }

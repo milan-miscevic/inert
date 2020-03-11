@@ -2,7 +2,7 @@
 
 namespace Inert;
 
-use Inert\Exception\ServiceNotFoundException;
+use Inert\Exception\ServiceNotFound;
 
 class Dic
 {
@@ -18,7 +18,7 @@ class Dic
     public function get($id)
     {
         if (!isset($this->callables[$id])) {
-            throw new ServiceNotFoundException();
+            throw new ServiceNotFound();
         }
 
         return call_user_func_array(
