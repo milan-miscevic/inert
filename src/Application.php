@@ -3,42 +3,27 @@
 namespace Inert;
 
 use Exception;
-use Inert\Exception\ActionNotFound;
-use Inert\Exception\ControllerNotFound;
-use Inert\Exception\ServiceNotFound;
 
 class Application
 {
-    protected $dic;
+    private ActionLocator $actionLocator;
 
-    public function __construct($config)
+    public function __construct(array $config)
     {
-        $this->dic = new Dic($config['dic'], $config['config']);
+        $this->actionLocator = new ActionLocator(
+            $config['actions'],
+            new Dic($config['services'], $config['config']),
+            $config['config']
+        );
     }
 
-    public function run()
+    public function run(): void
     {
         try {
-            try {
-                $controller = $this->dic->get($this->query('controller', 'Index') . 'Controller');
-            } catch (ServiceNotFound $ex) {
-                throw new ControllerNotFound();
-            }
-
-            $action = $this->query('action', 'index') . 'Action';
-
-            if (method_exists($controller, $action)) {
-                $controller->$action();
-            } else {
-                throw new ActionNotFound();
-            }
+            $name = $_GET['action'] ?? 'index';
+            $this->actionLocator->get($name)->run();
         } catch (Exception $ex) {
-            (new ErrorController($ex))->indexAction();
+            (new ErrorAction($ex))->run();
         }
-    }
-
-    protected function query($name, $default)
-    {
-        return $_GET[$name] ?? $default;
     }
 }
