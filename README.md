@@ -1,3 +1,3 @@
 # inert
 
-A mini PHP framework with basic MVC and DIC.
+A mini PHP framework with basic MVC and ServiceLocator.
