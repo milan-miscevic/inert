@@ -4,25 +4,25 @@ namespace Inert;
 
 use Inert\Exception\ServiceNotFound;
 
-class Dic
+class ServiceLocator
 {
-    protected $callables;
+    protected $factories;
     protected $config;
 
-    public function __construct($callables, $config)
+    public function __construct($factories, $config)
     {
-        $this->callables = $callables;
+        $this->factories = $factories;
         $this->config = $config;
     }
 
-    public function get($id)
+    public function get(string $id): object
     {
-        if (!isset($this->callables[$id])) {
+        if (!isset($this->factories[$id])) {
             throw new ServiceNotFound();
         }
 
         return call_user_func_array(
-            $this->callables[$id],
+            $this->factories[$id],
             [
                 $this,
                 $this->config,

@@ -7,10 +7,10 @@ use Inert\Exception\ActionNotFound;
 class ActionLocator
 {
     private array $factories;
-    private Dic $serviceLocator;
+    private ServiceLocator $serviceLocator;
     private array $config;
 
-    public function __construct(array $factories, Dic $serviceLocator, array $config)
+    public function __construct(array $factories, ServiceLocator $serviceLocator, array $config)
     {
         $this->factories = $factories;
         $this->serviceLocator = $serviceLocator;
