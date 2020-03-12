@@ -1,5 +1,5 @@
 {
-    "name": "inert",
+    "name": "milan-miscevic/inert",
     "autoload": {
         "psr-4": {
             "Inert\\": "src/"
