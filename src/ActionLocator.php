@@ -8,13 +8,11 @@ class ActionLocator
 {
     private array $factories;
     private ServiceLocator $serviceLocator;
-    private array $config;
 
-    public function __construct(array $factories, ServiceLocator $serviceLocator, array $config)
+    public function __construct(array $factories, ServiceLocator $serviceLocator)
     {
         $this->factories = $factories;
         $this->serviceLocator = $serviceLocator;
-        $this->config = $config;
     }
 
     public function get(string $id): object
@@ -23,12 +21,6 @@ class ActionLocator
             throw new ActionNotFound();
         }
 
-        return call_user_func_array(
-            $this->factories[$id],
-            [
-                $this->serviceLocator,
-                $this->config,
-            ]
-        );
+        return call_user_func_array($this->factories[$id], [$this->serviceLocator]);
     }
 }

@@ -7,12 +7,10 @@ use Inert\Exception\ServiceNotFound;
 class ServiceLocator
 {
     protected $factories;
-    protected $config;
 
-    public function __construct($factories, $config)
+    public function __construct($factories)
     {
         $this->factories = $factories;
-        $this->config = $config;
     }
 
     public function get(string $id): object
@@ -21,12 +19,6 @@ class ServiceLocator
             throw new ServiceNotFound();
         }
 
-        return call_user_func_array(
-            $this->factories[$id],
-            [
-                $this,
-                $this->config,
-            ]
-        );
+        return call_user_func_array($this->factories[$id], [$this]);
     }
 }

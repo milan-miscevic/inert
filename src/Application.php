@@ -12,8 +12,7 @@ class Application
     {
         $this->actionLocator = new ActionLocator(
             $config['actions'],
-            new ServiceLocator($config['services'], $config['config']),
-            $config['config']
+            new ServiceLocator($config['services'])
         );
     }
 
