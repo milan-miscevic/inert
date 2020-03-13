@@ -2,8 +2,10 @@
 
 namespace Inert;
 
-class Action
+abstract class Action
 {
+    abstract public function run(): void;
+
     protected function render($file, $args = [])
     {
         extract($args);
