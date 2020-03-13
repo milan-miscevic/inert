@@ -6,7 +6,7 @@ use Inert\Exception\ServiceNotFound;
 
 class ServiceLocator
 {
-    protected $factories;
+    protected array $factories;
 
     public function __construct($factories)
     {

@@ -6,7 +6,7 @@ abstract class Action
 {
     abstract public function run(): void;
 
-    protected function render($file, $args = [])
+    protected function render(string $file, array $args = []): void
     {
         extract($args);
 
