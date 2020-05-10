@@ -26,7 +26,7 @@ class ActionLocator
                 $this->factories[$id] = new $this->factories[$id]();
             }
 
-            if ($this->factories[$id] instanceof BaseFactory) {
+            if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof \Closure) {
                 $this->factories[$id] = call_user_func_array($this->factories[$id], [$this->serviceLocator]);
             }
 
