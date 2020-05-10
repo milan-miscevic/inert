@@ -4,5 +4,4 @@ namespace Inert\Exception;
 
 interface ExceptionInterface
 {
-
 }
