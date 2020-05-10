@@ -15,7 +15,7 @@ class ActionLocator
         $this->serviceLocator = $serviceLocator;
     }
 
-    public function get(string $id): object
+    public function get(string $id): BaseAction
     {
         if (!isset($this->factories[$id])) {
             throw new Exception\ActionNotFound();
