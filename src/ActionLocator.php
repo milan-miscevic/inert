@@ -2,9 +2,6 @@
 
 namespace Inert;
 
-use Inert\Exception\ActionNotFound;
-use Inert\Exception\InvalidFactory;
-
 class ActionLocator
 {
     private array $factories;
@@ -19,7 +16,7 @@ class ActionLocator
     public function get(string $id): object
     {
         if (!isset($this->factories[$id])) {
-            throw new ActionNotFound();
+            throw new Exception\ActionNotFound();
         }
 
         try {
@@ -27,9 +24,13 @@ class ActionLocator
                 $this->factories[$id] = new $this->factories[$id]();
             }
 
-            return call_user_func_array($this->factories[$id], [$this->serviceLocator]);
+            if ($this->factories[$id] instanceof BaseFactory) {
+                $this->factories[$id] = call_user_func_array($this->factories[$id], [$this->serviceLocator]);
+            }
+
+            return $this->factories[$id];
         } catch (\Throwable $ex) {
-            throw new InvalidFactory();
+            throw new Exception\InvalidFactory('', 0, $ex);
         }
     }
 }

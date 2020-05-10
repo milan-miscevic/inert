@@ -2,13 +2,11 @@
 
 namespace Inert;
 
-use Inert\Exception\ServiceNotFound;
-
 class ServiceLocator
 {
-    protected array $factories;
+    private array $factories;
 
-    public function __construct($factories)
+    public function __construct(array $factories)
     {
         $this->factories = $factories;
     }
@@ -16,9 +14,21 @@ class ServiceLocator
     public function get(string $id): object
     {
         if (!isset($this->factories[$id])) {
-            throw new ServiceNotFound();
+            throw new Exception\ServiceNotFound();
         }
 
-        return call_user_func_array($this->factories[$id], [$this]);
+        try {
+            if (is_string($this->factories[$id])) {
+                $this->factories[$id] = new $this->factories[$id]();
+            }
+
+            if ($this->factories[$id] instanceof BaseFactory) {
+                $this->factories[$id] = call_user_func_array($this->factories[$id], [$this]);
+            }
+
+            return $this->factories[$id];
+        } catch (\Throwable $ex) {
+            throw new Exception\InvalidFactory('', 0, $ex);
+        }
     }
 }
