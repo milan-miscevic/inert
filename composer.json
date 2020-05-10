@@ -11,5 +11,10 @@
         "psr-4": {
             "Inert\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "InertTest\\": "tests/"
+        }
     }
 }
