@@ -1,5 +1,8 @@
 {
     "name": "milan-miscevic/inert",
+    "require": {
+        "php": "^7.4"
+    },
     "autoload": {
         "psr-4": {
             "Inert\\": "src/"
