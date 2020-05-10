@@ -2,7 +2,7 @@
 
 namespace Inert;
 
-abstract class Action
+abstract class BaseAction
 {
     abstract public function run(): void;
 
@@ -10,6 +10,6 @@ abstract class Action
     {
         extract($args);
 
-        require '..' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . $file . '.php';
+        require BASE_PATH . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . $file . '.php';
     }
 }

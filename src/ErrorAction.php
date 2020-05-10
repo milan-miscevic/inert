@@ -4,7 +4,7 @@ namespace Inert;
 
 use Exception;
 
-class ErrorAction extends Action
+class ErrorAction extends BaseAction
 {
     protected Exception $exception;
 
