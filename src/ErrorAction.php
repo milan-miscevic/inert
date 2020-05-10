@@ -2,13 +2,11 @@
 
 namespace Inert;
 
-use Exception;
-
 class ErrorAction extends BaseAction
 {
-    protected Exception $exception;
+    private \Exception $exception;
 
-    public function __construct(Exception $exception)
+    public function __construct(\Exception $exception)
     {
         $this->exception = $exception;
     }

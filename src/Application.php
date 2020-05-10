@@ -2,8 +2,6 @@
 
 namespace Inert;
 
-use Exception;
-
 class Application
 {
     private ActionLocator $actionLocator;
@@ -21,7 +19,7 @@ class Application
         try {
             $name = $_GET['action'] ?? 'index';
             $this->actionLocator->get($name)->run();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             (new ErrorAction($ex))->run();
         }
     }
