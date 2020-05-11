@@ -1,5 +1,8 @@
 {
     "name": "milan-miscevic/inert",
+    "description": "A mini PHP framework with basic MVC and service locator support",
+    "keywords": ["framework", "mvc", "service locator"],
+    "license": "MIT",
     "require": {
         "php": "^7.4"
     },
