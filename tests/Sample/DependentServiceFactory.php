@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace InertTest\Sample;
+namespace Inert\Tests\Sample;
 
 use Inert\BaseFactory;
 use Inert\ServiceLocator;

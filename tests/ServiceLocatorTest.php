@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace InertTest;
+namespace Inert\Tests;
 
-use InertTest\Sample\DependentService;
-use InertTest\Sample\DependentServiceFactory;
-use InertTest\Sample\SimpleService;
 use Inert\Exception\InvalidFactory;
 use Inert\Exception\ServiceNotFound;
 use Inert\ServiceLocator;
+use Inert\Tests\Sample\DependentService;
+use Inert\Tests\Sample\DependentServiceFactory;
+use Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
 
 class ServiceLocatorTest extends TestCase
