@@ -8,6 +8,9 @@ abstract class BaseAction
 {
     abstract public function run(): void;
 
+    /**
+     * @param mixed[] $args
+     */
     protected function render(string $file, array $args = []): void
     {
         extract($args);

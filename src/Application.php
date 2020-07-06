@@ -8,6 +8,9 @@ class Application
 {
     private ActionLocator $actionLocator;
 
+    /**
+     * @param array[] $config
+     */
     public function __construct(array $config)
     {
         $this->actionLocator = new ActionLocator(

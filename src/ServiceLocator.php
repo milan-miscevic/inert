@@ -6,8 +6,12 @@ namespace Inert;
 
 class ServiceLocator
 {
+    /** @var (object|string)[] */
     private array $factories;
 
+    /**
+     * @param (string|BaseFactory|\Closure)[] $factories
+     */
     public function __construct(array $factories)
     {
         $this->factories = $factories;
