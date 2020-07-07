@@ -7,6 +7,7 @@ namespace Inert\Tests;
 use Inert\ActionLocator;
 use Inert\Application;
 use Inert\BaseAction;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
@@ -15,6 +16,7 @@ class ApplicationTest extends TestCase
 
     public function testActionSuccessful(): void
     {
+        /** @var ActionLocator&MockObject */
         $stub = $this->getMockBuilder(ActionLocator::class)
             ->disableOriginalConstructor()
             ->getMock();
