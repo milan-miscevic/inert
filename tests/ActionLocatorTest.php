@@ -20,7 +20,7 @@ class ActionLocatorTest extends TestCase
             SimpleAction::class => SimpleAction::class,
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]));
+        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(SimpleAction::class));
     }
@@ -33,7 +33,7 @@ class ActionLocatorTest extends TestCase
             },
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]));
+        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(SimpleAction::class));
     }
@@ -44,7 +44,7 @@ class ActionLocatorTest extends TestCase
             SimpleAction::class => SimpleActionFactory::class,
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]));
+        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(SimpleAction::class));
     }
@@ -53,7 +53,7 @@ class ActionLocatorTest extends TestCase
     {
         $config = [];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]));
+        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->expectException(ActionNotFound::class);
 
@@ -68,7 +68,7 @@ class ActionLocatorTest extends TestCase
             },
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]));
+        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->expectException(InvalidFactory::class);
 

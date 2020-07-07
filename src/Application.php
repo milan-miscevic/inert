@@ -9,13 +9,14 @@ class Application
     private ActionLocator $actionLocator;
 
     /**
-     * @param array[] $config
+     * @param (array|string)[] $config
      */
     public function __construct(array $config)
     {
         $this->actionLocator = new ActionLocator(
             $config['actions'],
-            new ServiceLocator($config['services'])
+            new ServiceLocator($config['services']),
+            $config['viewFolder']
         );
     }
 

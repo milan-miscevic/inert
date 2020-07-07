@@ -6,17 +6,20 @@ namespace Inert;
 
 class ActionLocator
 {
-    /** @var (object|string)[] */
+    /** @var (string|BaseFactory|\Closure|BaseAction)[] */
     private array $factories;
+
     private ServiceLocator $serviceLocator;
+    private string $viewFolder;
 
     /**
      * @param (string|BaseFactory|\Closure)[] $factories
      */
-    public function __construct(array $factories, ServiceLocator $serviceLocator)
+    public function __construct(array $factories, ServiceLocator $serviceLocator, string $viewFolder)
     {
         $this->factories = $factories;
         $this->serviceLocator = $serviceLocator;
+        $this->viewFolder = $viewFolder;
     }
 
     public function get(string $id): BaseAction
@@ -33,6 +36,8 @@ class ActionLocator
             if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof \Closure) {
                 $this->factories[$id] = call_user_func_array($this->factories[$id], [$this->serviceLocator]);
             }
+
+            $this->factories[$id]->setViewFolder($this->viewFolder);
 
             return $this->factories[$id];
         } catch (\Throwable $ex) {

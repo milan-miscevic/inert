@@ -6,6 +6,13 @@ namespace Inert;
 
 abstract class BaseAction
 {
+    private string $viewFolder;
+
+    public function setViewFolder(string $viewFolder): void
+    {
+        $this->viewFolder = $viewFolder;
+    }
+
     abstract public function run(): void;
 
     /**
@@ -15,6 +22,6 @@ abstract class BaseAction
     {
         extract($args);
 
-        require BASE_PATH . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . $file . '.php';
+        require $this->viewFolder . DIRECTORY_SEPARATOR . $file . '.php';
     }
 }
