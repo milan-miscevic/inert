@@ -17,7 +17,7 @@ class ErrorActionTest extends TestCase
         $action->setViewFolder(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view');
 
         ob_start();
-        $action->run();
+        $action->run()->render();
         $content = ob_get_contents();
         ob_end_clean();
 

@@ -8,6 +8,7 @@ use Inert\ActionLocator;
 use Inert\Application;
 use Inert\BaseAction;
 use Inert\Exception\ActionNotFound;
+use Inert\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -25,9 +26,9 @@ class ApplicationTest extends TestCase
 
         $action = function () {
             return new class extends BaseAction {
-                public function run(): void
+                public function run(): Response
                 {
-                    echo 'This is a text.';
+                    return new Response('This is a text.', []);
                 }
             };
         };
