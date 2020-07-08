@@ -13,15 +13,24 @@ abstract class BaseAction
         $this->viewFolder = $viewFolder;
     }
 
-    abstract public function run(): void;
+    abstract public function run(): Response;
 
     /**
      * @param mixed[] $args
      */
-    protected function render(string $file, array $args = []): void
+    protected function render(string $file, array $args = []): Response
     {
         extract($args);
 
+        ob_start();
         require $this->viewFolder . DIRECTORY_SEPARATOR . $file . '.php';
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        if ($content === false) {
+            $content = '';
+        }
+
+        return new Response($content);
     }
 }

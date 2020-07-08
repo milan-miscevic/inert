@@ -13,8 +13,8 @@ class ErrorAction extends BaseAction
         $this->exception = $exception;
     }
 
-    public function run(): void
+    public function run(): Response
     {
-        $this->render('error', ['exception' => $this->exception]);
+        return $this->render('error', ['exception' => $this->exception]);
     }
 }

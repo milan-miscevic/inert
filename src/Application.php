@@ -19,11 +19,13 @@ class Application
     {
         try {
             $name = $_GET['action'] ?? 'index';
-            $this->actionLocator->get($name)->run();
+            $response = $this->actionLocator->get($name)->run();
         } catch (\Exception $ex) {
             $errorAction = new ErrorAction($ex);
             $errorAction->setViewFolder($this->viewFolder);
-            $errorAction->run();
+            $response = $errorAction->run();
         }
+
+        $response->render();
     }
 }
