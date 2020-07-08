@@ -7,10 +7,12 @@ namespace Inert;
 class Application
 {
     private ActionLocator $actionLocator;
+    private string $viewFolder;
 
-    public function __construct(ActionLocator $actionLocator)
+    public function __construct(ActionLocator $actionLocator, string $viewFolder)
     {
         $this->actionLocator = $actionLocator;
+        $this->viewFolder = $viewFolder;
     }
 
     public function run(): void
@@ -19,7 +21,9 @@ class Application
             $name = $_GET['action'] ?? 'index';
             $this->actionLocator->get($name)->run();
         } catch (\Exception $ex) {
-            (new ErrorAction($ex))->run();
+            $errorAction = new ErrorAction($ex);
+            $errorAction->setViewFolder($this->viewFolder);
+            $errorAction->run();
         }
     }
 }

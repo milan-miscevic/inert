@@ -33,7 +33,7 @@ class ApplicationTest extends TestCase
         $stub->method('get')
             ->willReturnCallback($callback);
 
-        $application = new Application($stub);
+        $application = new Application($stub, '');
 
         ob_start();
         $application->run();
