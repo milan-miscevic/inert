@@ -6,4 +6,8 @@ namespace Inert\Tests\Sample;
 
 class SimpleService
 {
+    public function simpleMethod(): string
+    {
+        return 'simple';
+    }
 }

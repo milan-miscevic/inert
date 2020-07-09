@@ -28,7 +28,7 @@ class ServiceLocatorTest extends TestCase
     public function testFunctionDefinition(): void
     {
         $config = [
-            DependentService::class => function (ServiceLocator $serviceLocator) {
+            DependentService::class => function () {
                 return new DependentService(new SimpleService());
             },
         ];
@@ -42,6 +42,7 @@ class ServiceLocatorTest extends TestCase
     {
         $config = [
             DependentService::class => DependentServiceFactory::class,
+            SimpleService::class => SimpleService::class,
         ];
 
         $serviceLocator = new ServiceLocator($config);
@@ -63,7 +64,7 @@ class ServiceLocatorTest extends TestCase
     public function testInvalidFactory(): void
     {
         $config = [
-            SimpleService::class => function (ServiceLocator $serviceLocator) {
+            SimpleService::class => function () {
                 return null;
             },
         ];

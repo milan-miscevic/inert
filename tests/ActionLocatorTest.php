@@ -8,8 +8,10 @@ use Inert\ActionLocator;
 use Inert\Exception\ActionNotFound;
 use Inert\Exception\InvalidFactory;
 use Inert\ServiceLocator;
+use Inert\Tests\Sample\DependentAction;
+use Inert\Tests\Sample\DependentActionFactory;
 use Inert\Tests\Sample\SimpleAction;
-use Inert\Tests\Sample\SimpleActionFactory;
+use Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
 
 class ActionLocatorTest extends TestCase
@@ -28,7 +30,7 @@ class ActionLocatorTest extends TestCase
     public function testFunctionDefinition(): void
     {
         $config = [
-            SimpleAction::class => function (ServiceLocator $serviceLocator) {
+            SimpleAction::class => function () {
                 return new SimpleAction();
             },
         ];
@@ -40,13 +42,17 @@ class ActionLocatorTest extends TestCase
 
     public function testFactoryDefinition(): void
     {
-        $config = [
-            SimpleAction::class => SimpleActionFactory::class,
+        $services = [
+            SimpleService::class => SimpleService::class,
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
+        $actions = [
+            DependentAction::class => DependentActionFactory::class,
+        ];
 
-        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(SimpleAction::class));
+        $actionLocator = new ActionLocator($actions, new ServiceLocator($services), '');
+
+        $this->assertInstanceOf(DependentAction::class, $actionLocator->get(DependentAction::class));
     }
 
     public function testActionNotFound(): void
