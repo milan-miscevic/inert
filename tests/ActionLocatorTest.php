@@ -69,7 +69,7 @@ class ActionLocatorTest extends TestCase
     public function testInvalidFactory(): void
     {
         $config = [
-            SimpleAction::class => function (ServiceLocator $serviceLocator) {
+            SimpleAction::class => function () {
                 return null;
             },
         ];
