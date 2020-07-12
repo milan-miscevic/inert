@@ -62,6 +62,7 @@ class ActionLocatorTest extends TestCase
         $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->expectException(ActionNotFound::class);
+        $this->expectExceptionCode(0);
 
         $actionLocator->get(SimpleAction::class);
     }
@@ -77,6 +78,7 @@ class ActionLocatorTest extends TestCase
         $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
         $this->expectException(InvalidFactory::class);
+        $this->expectExceptionCode(0);
 
         $actionLocator->get(SimpleAction::class);
     }

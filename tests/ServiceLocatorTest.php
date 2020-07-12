@@ -57,6 +57,7 @@ class ServiceLocatorTest extends TestCase
         $serviceLocator = new ServiceLocator($config);
 
         $this->expectException(ServiceNotFound::class);
+        $this->expectExceptionCode(0);
 
         $serviceLocator->get(SimpleService::class);
     }
@@ -72,6 +73,7 @@ class ServiceLocatorTest extends TestCase
         $serviceLocator = new ServiceLocator($config);
 
         $this->expectException(InvalidFactory::class);
+        $this->expectExceptionCode(0);
 
         $serviceLocator->get(SimpleService::class);
     }
