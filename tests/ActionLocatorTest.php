@@ -16,28 +16,31 @@ use PHPUnit\Framework\TestCase;
 
 class ActionLocatorTest extends TestCase
 {
+    const SIMPLE = 'simple';
+    const DEPENDENT = 'dependent';
+
     public function testClassDefinition(): void
     {
         $config = [
-            SimpleAction::class => SimpleAction::class,
+            self::SIMPLE => SimpleAction::class,
         ];
 
         $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
-        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(SimpleAction::class));
+        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(self::SIMPLE));
     }
 
     public function testFunctionDefinition(): void
     {
         $config = [
-            SimpleAction::class => function () {
+            self::SIMPLE => function () {
                 return new SimpleAction();
             },
         ];
 
         $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
 
-        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(SimpleAction::class));
+        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(self::SIMPLE));
     }
 
     public function testFactoryDefinition(): void
@@ -47,12 +50,12 @@ class ActionLocatorTest extends TestCase
         ];
 
         $actions = [
-            DependentAction::class => DependentActionFactory::class,
+            self::DEPENDENT => DependentActionFactory::class,
         ];
 
         $actionLocator = new ActionLocator($actions, new ServiceLocator($services), '');
 
-        $this->assertInstanceOf(DependentAction::class, $actionLocator->get(DependentAction::class));
+        $this->assertInstanceOf(DependentAction::class, $actionLocator->get(self::DEPENDENT));
     }
 
     public function testActionNotFound(): void
@@ -64,13 +67,13 @@ class ActionLocatorTest extends TestCase
         $this->expectException(ActionNotFound::class);
         $this->expectExceptionCode(0);
 
-        $actionLocator->get(SimpleAction::class);
+        $actionLocator->get(self::SIMPLE);
     }
 
     public function testInvalidFactory(): void
     {
         $config = [
-            SimpleAction::class => function () {
+            self::SIMPLE => function () {
                 return null;
             },
         ];
@@ -80,6 +83,6 @@ class ActionLocatorTest extends TestCase
         $this->expectException(InvalidFactory::class);
         $this->expectExceptionCode(0);
 
-        $actionLocator->get(SimpleAction::class);
+        $actionLocator->get(self::SIMPLE);
     }
 }
