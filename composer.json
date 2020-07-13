@@ -44,6 +44,7 @@
     "scripts": {
         "coverage": "phpunit --coverage-text",
         "fix": "php-cs-fixer fix",
+        "infection": "infection",
         "phpstan": "phpstan analyse",
         "test": "phpunit"
     }
