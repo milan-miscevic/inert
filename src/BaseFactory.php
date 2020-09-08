@@ -6,5 +6,5 @@ namespace Inert;
 
 abstract class BaseFactory
 {
-    abstract public function __invoke(ServiceLocator $serviceLocator): object;
+    abstract public function __invoke(ServiceContainer $serviceContainer): object;
 }

@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace Inert;
 
-class ServiceLocator
+class ActionContainer
 {
-    /** @var (object|string)[] */
+    /** @var (string|BaseFactory|\Closure|BaseAction)[] */
     private array $factories;
+
+    private ServiceContainer $serviceContainer;
+    private string $viewFolder;
 
     /**
      * @param (string|BaseFactory|\Closure)[] $factories
      */
-    public function __construct(array $factories)
+    public function __construct(array $factories, ServiceContainer $serviceContainer, string $viewFolder)
     {
         $this->factories = $factories;
+        $this->serviceContainer = $serviceContainer;
+        $this->viewFolder = $viewFolder;
     }
 
-    public function get(string $id): object
+    public function get(string $id): BaseAction
     {
         if (!isset($this->factories[$id])) {
-            throw new Exception\ServiceNotFound();
+            throw new Exception\ActionNotFound();
         }
 
         try {
@@ -29,8 +34,10 @@ class ServiceLocator
             }
 
             if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof \Closure) {
-                $this->factories[$id] = call_user_func_array($this->factories[$id], [$this]);
+                $this->factories[$id] = call_user_func_array($this->factories[$id], [$this->serviceContainer]);
             }
+
+            $this->factories[$id]->setViewFolder($this->viewFolder);
 
             return $this->factories[$id];
         } catch (\Throwable $ex) {

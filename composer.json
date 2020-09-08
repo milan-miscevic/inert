@@ -1,16 +1,16 @@
 {
     "name": "milan-miscevic/inert",
     "type": "library",
-    "description": "A mini PHP framework with basic MVC and service locator support",
+    "description": "A mini PHP framework with basic MVC and container support",
     "keywords": [
         "inert",
         "php-framework",
         "framework",
         "mvc",
-        "service-locator",
+        "service-container",
         "basic",
         "factory",
-        "action-locator"
+        "action-container"
     ],
     "license": "MIT",
     "authors": [

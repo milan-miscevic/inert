@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Inert\Tests;
 
-use Inert\ActionLocator;
+use Inert\ActionContainer;
 use Inert\Exception\ActionNotFound;
 use Inert\Exception\InvalidFactory;
-use Inert\ServiceLocator;
+use Inert\ServiceContainer;
 use Inert\Tests\Sample\DependentAction;
 use Inert\Tests\Sample\DependentActionFactory;
 use Inert\Tests\Sample\SimpleAction;
 use Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
 
-class ActionLocatorTest extends TestCase
+class ActionContainerTest extends TestCase
 {
     const SIMPLE = 'simple';
     const DEPENDENT = 'dependent';
@@ -25,9 +25,9 @@ class ActionLocatorTest extends TestCase
             self::SIMPLE => SimpleAction::class,
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
+        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
 
-        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(self::SIMPLE));
+        $this->assertInstanceOf(SimpleAction::class, $actionContainer->get(self::SIMPLE));
     }
 
     public function testFunctionDefinition(): void
@@ -38,9 +38,9 @@ class ActionLocatorTest extends TestCase
             },
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
+        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
 
-        $this->assertInstanceOf(SimpleAction::class, $actionLocator->get(self::SIMPLE));
+        $this->assertInstanceOf(SimpleAction::class, $actionContainer->get(self::SIMPLE));
     }
 
     public function testFactoryDefinition(): void
@@ -53,21 +53,21 @@ class ActionLocatorTest extends TestCase
             self::DEPENDENT => DependentActionFactory::class,
         ];
 
-        $actionLocator = new ActionLocator($actions, new ServiceLocator($services), '');
+        $actionContainer = new ActionContainer($actions, new ServiceContainer($services), '');
 
-        $this->assertInstanceOf(DependentAction::class, $actionLocator->get(self::DEPENDENT));
+        $this->assertInstanceOf(DependentAction::class, $actionContainer->get(self::DEPENDENT));
     }
 
     public function testActionNotFound(): void
     {
         $config = [];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
+        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
 
         $this->expectException(ActionNotFound::class);
         $this->expectExceptionCode(0);
 
-        $actionLocator->get(self::SIMPLE);
+        $actionContainer->get(self::SIMPLE);
     }
 
     public function testInvalidFactory(): void
@@ -78,11 +78,11 @@ class ActionLocatorTest extends TestCase
             },
         ];
 
-        $actionLocator = new ActionLocator($config, new ServiceLocator([]), '');
+        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
 
         $this->expectException(InvalidFactory::class);
         $this->expectExceptionCode(0);
 
-        $actionLocator->get(self::SIMPLE);
+        $actionContainer->get(self::SIMPLE);
     }
 }

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Inert\Tests\Sample;
 
 use Inert\BaseFactory;
-use Inert\ServiceLocator;
+use Inert\ServiceContainer;
 
 class DependentServiceFactory extends BaseFactory
 {
-    public function __invoke(ServiceLocator $serviceLocator): DependentService
+    public function __invoke(ServiceContainer $serviceContainer): DependentService
     {
         /** @var SimpleService */
-        $simpleService = $serviceLocator->get(SimpleService::class);
+        $simpleService = $serviceContainer->get(SimpleService::class);
 
         return new DependentService($simpleService);
     }

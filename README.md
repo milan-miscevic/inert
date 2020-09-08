@@ -5,4 +5,4 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=milan-miscevic_inert&metric=alert_status)](https://sonarcloud.io/dashboard?id=milan-miscevic_inert)
 [![Software License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-A mini PHP framework with basic MVC and service locator support.
+A mini PHP framework with basic MVC and service container support.

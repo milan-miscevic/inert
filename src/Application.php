@@ -6,12 +6,12 @@ namespace Inert;
 
 class Application
 {
-    private ActionLocator $actionLocator;
+    private ActionContainer $actionContainer;
     private string $viewFolder;
 
-    public function __construct(ActionLocator $actionLocator, string $viewFolder)
+    public function __construct(ActionContainer $actionContainer, string $viewFolder)
     {
-        $this->actionLocator = $actionLocator;
+        $this->actionContainer = $actionContainer;
         $this->viewFolder = $viewFolder;
     }
 
@@ -19,7 +19,7 @@ class Application
     {
         try {
             $name = $_GET['action'] ?? 'index';
-            $response = $this->actionLocator->get($name)->run();
+            $response = $this->actionContainer->get($name)->run();
         } catch (\Exception $ex) {
             $errorAction = new ErrorAction($ex);
             $errorAction->setViewFolder($this->viewFolder);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Inert\Tests;
 
-use Inert\ActionLocator;
+use Inert\ActionContainer;
 use Inert\Application;
 use Inert\BaseAction;
 use Inert\Exception\ActionNotFound;
@@ -19,8 +19,8 @@ class ApplicationTest extends TestCase
 
     public function testActionSuccessful(): void
     {
-        /** @var ActionLocator&MockObject */
-        $actionLocator = $this->getMockBuilder(ActionLocator::class)
+        /** @var ActionContainer&MockObject */
+        $actionContainer = $this->getMockBuilder(ActionContainer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -33,10 +33,10 @@ class ApplicationTest extends TestCase
             };
         };
 
-        $actionLocator->method('get')
+        $actionContainer->method('get')
             ->willReturnCallback($action);
 
-        $application = new Application($actionLocator, '');
+        $application = new Application($actionContainer, '');
 
         ob_start();
         $application->run();
@@ -48,16 +48,16 @@ class ApplicationTest extends TestCase
 
     public function testActionNotFound(): void
     {
-        /** @var ActionLocator&MockObject */
-        $actionLocator = $this->getMockBuilder(ActionLocator::class)
+        /** @var ActionContainer&MockObject */
+        $actionContainer = $this->getMockBuilder(ActionContainer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $actionLocator->method('get')
+        $actionContainer->method('get')
             ->willThrowException(new ActionNotFound());
 
         $viewFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view';
-        $application = new Application($actionLocator, $viewFolder);
+        $application = new Application($actionContainer, $viewFolder);
 
         ob_start();
         $application->run();

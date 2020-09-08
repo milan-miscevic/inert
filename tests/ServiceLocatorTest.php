@@ -6,13 +6,13 @@ namespace Inert\Tests;
 
 use Inert\Exception\InvalidFactory;
 use Inert\Exception\ServiceNotFound;
-use Inert\ServiceLocator;
+use Inert\ServiceContainer;
 use Inert\Tests\Sample\DependentService;
 use Inert\Tests\Sample\DependentServiceFactory;
 use Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
 
-class ServiceLocatorTest extends TestCase
+class ServiceContainerTest extends TestCase
 {
     public function testClassDefinition(): void
     {
@@ -20,9 +20,9 @@ class ServiceLocatorTest extends TestCase
             SimpleService::class => SimpleService::class,
         ];
 
-        $serviceLocator = new ServiceLocator($config);
+        $serviceContainer = new ServiceContainer($config);
 
-        $this->assertInstanceOf(SimpleService::class, $serviceLocator->get(SimpleService::class));
+        $this->assertInstanceOf(SimpleService::class, $serviceContainer->get(SimpleService::class));
     }
 
     public function testFunctionDefinition(): void
@@ -33,9 +33,9 @@ class ServiceLocatorTest extends TestCase
             },
         ];
 
-        $serviceLocator = new ServiceLocator($config);
+        $serviceContainer = new ServiceContainer($config);
 
-        $this->assertInstanceOf(DependentService::class, $serviceLocator->get(DependentService::class));
+        $this->assertInstanceOf(DependentService::class, $serviceContainer->get(DependentService::class));
     }
 
     public function testFactoryDefinition(): void
@@ -45,21 +45,21 @@ class ServiceLocatorTest extends TestCase
             SimpleService::class => SimpleService::class,
         ];
 
-        $serviceLocator = new ServiceLocator($config);
+        $serviceContainer = new ServiceContainer($config);
 
-        $this->assertInstanceOf(DependentService::class, $serviceLocator->get(DependentService::class));
+        $this->assertInstanceOf(DependentService::class, $serviceContainer->get(DependentService::class));
     }
 
     public function testServiceNotFound(): void
     {
         $config = [];
 
-        $serviceLocator = new ServiceLocator($config);
+        $serviceContainer = new ServiceContainer($config);
 
         $this->expectException(ServiceNotFound::class);
         $this->expectExceptionCode(0);
 
-        $serviceLocator->get(SimpleService::class);
+        $serviceContainer->get(SimpleService::class);
     }
 
     public function testInvalidFactory(): void
@@ -70,11 +70,11 @@ class ServiceLocatorTest extends TestCase
             },
         ];
 
-        $serviceLocator = new ServiceLocator($config);
+        $serviceContainer = new ServiceContainer($config);
 
         $this->expectException(InvalidFactory::class);
         $this->expectExceptionCode(0);
 
-        $serviceLocator->get(SimpleService::class);
+        $serviceContainer->get(SimpleService::class);
     }
 }
