@@ -1,7 +1,7 @@
 {
     "name": "milan-miscevic/inert",
-    "description": "A mini PHP framework with basic MVC and service locator support",
     "type": "library",
+    "description": "A mini PHP framework with basic MVC and service locator support",
     "keywords": [
         "inert",
         "php-framework",
@@ -28,6 +28,9 @@
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9"
     },
+    "config": {
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "Inert\\": "src/"
@@ -37,9 +40,6 @@
         "psr-4": {
             "Inert\\Tests\\": "tests/"
         }
-    },
-    "config": {
-        "sort-packages": true
     },
     "scripts": {
         "coverage": "phpunit --coverage-text",
