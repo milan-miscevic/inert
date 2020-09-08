@@ -1,7 +1,7 @@
 {
     "name": "milan-miscevic/inert",
     "type": "library",
-    "description": "A mini PHP framework with basic MVC and container support",
+    "description": "A mini PHP framework with basic MVC and service container support",
     "keywords": [
         "inert",
         "php-framework",
@@ -26,7 +26,8 @@
         "friendsofphp/php-cs-fixer": "^2",
         "infection/infection": "^0.16",
         "phpstan/phpstan": "^0.12",
-        "phpunit/phpunit": "^9"
+        "phpunit/phpunit": "^9",
+        "vimeo/psalm": "^3"
     },
     "config": {
         "sort-packages": true
@@ -46,6 +47,7 @@
         "fix": "php-cs-fixer fix",
         "infection": "infection",
         "phpstan": "phpstan analyse",
+        "psalm": "psalm --show-info=true",
         "test": "phpunit"
     }
 }
