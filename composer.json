@@ -27,7 +27,7 @@
         "infection/infection": "^0.16 || ^0.20",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9",
-        "vimeo/psalm": "^3"
+        "vimeo/psalm": "^3 || ^4"
     },
     "config": {
         "sort-packages": true
