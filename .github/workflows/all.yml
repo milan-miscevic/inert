@@ -1,0 +1,32 @@
+name: All
+
+on:
+  pull_request:
+    branches:
+      - master
+      - test
+  push:
+    branches:
+      - master
+      - test
+
+jobs:
+  tests:
+    name: Tests
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version:
+          - 7.4
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install composer dependencies
+        uses: php-actions/composer@v1
+
+      - name: Run phpunit/phpunit
+        run: vendor/bin/phpunit
