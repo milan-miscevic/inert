@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests;
+namespace Mmm\Inert\Tests;
 
-use Inert\Response;
-use Inert\Tests\Internal\Counter;
+use Mmm\Inert\Response;
+use Mmm\Inert\Tests\Internal\Counter;
 use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests;
+namespace Mmm\Inert\Tests;
 
-use Inert\ErrorAction;
+use Mmm\Inert\ErrorAction;
 use PHPUnit\Framework\TestCase;
 
 class ErrorActionTest extends TestCase

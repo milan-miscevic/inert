@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Inert\Exception;
+namespace Mmm\Inert\Exception;
 
 interface ExceptionInterface
 {

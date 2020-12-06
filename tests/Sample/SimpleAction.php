@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests\Sample;
+namespace Mmm\Inert\Tests\Sample;
 
-use Inert\BaseAction;
-use Inert\Response;
+use Mmm\Inert\BaseAction;
+use Mmm\Inert\Response;
 
 class SimpleAction extends BaseAction
 {

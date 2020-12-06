@@ -26,7 +26,7 @@
         "friendsofphp/php-cs-fixer": "^2.16.7",
         "infection/infection": "^0.20",
         "phpstan/phpstan": "^0.12.58",
-        "phpunit/phpunit": "^9.4.4",
+        "phpunit/phpunit": "^9.5",
         "vimeo/psalm": "^4.3"
     },
     "config": {
@@ -34,12 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Inert\\": "src/"
+            "Mmm\\Inert\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Inert\\Tests\\": "tests/"
+            "Mmm\\Inert\\Tests\\": "tests/"
         }
     },
     "scripts": {

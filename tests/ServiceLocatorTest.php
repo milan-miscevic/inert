@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests;
+namespace Mmm\Inert\Tests;
 
-use Inert\Exception\InvalidFactory;
-use Inert\Exception\ServiceNotFound;
-use Inert\ServiceContainer;
-use Inert\Tests\Sample\DependentService;
-use Inert\Tests\Sample\DependentServiceFactory;
-use Inert\Tests\Sample\SimpleService;
+use Mmm\Inert\Exception\InvalidFactory;
+use Mmm\Inert\Exception\ServiceNotFound;
+use Mmm\Inert\ServiceContainer;
+use Mmm\Inert\Tests\Sample\DependentService;
+use Mmm\Inert\Tests\Sample\DependentServiceFactory;
+use Mmm\Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
 
 class ServiceContainerTest extends TestCase

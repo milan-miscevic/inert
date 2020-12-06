@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests\Internal;
+namespace Mmm\Inert\Tests\Internal;
 
 class Counter
 {

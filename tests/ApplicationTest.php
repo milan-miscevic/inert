@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests;
+namespace Mmm\Inert\Tests;
 
-use Inert\ActionContainer;
-use Inert\Application;
-use Inert\BaseAction;
-use Inert\Exception\ActionNotFound;
-use Inert\Response;
+use Mmm\Inert\ActionContainer;
+use Mmm\Inert\Application;
+use Mmm\Inert\BaseAction;
+use Mmm\Inert\Exception\ActionNotFound;
+use Mmm\Inert\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

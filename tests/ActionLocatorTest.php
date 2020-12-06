@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests;
+namespace Mmm\Inert\Tests;
 
-use Inert\ActionContainer;
-use Inert\Exception\ActionNotFound;
-use Inert\Exception\InvalidFactory;
-use Inert\ServiceContainer;
-use Inert\Tests\Sample\DependentAction;
-use Inert\Tests\Sample\DependentActionFactory;
-use Inert\Tests\Sample\SimpleAction;
-use Inert\Tests\Sample\SimpleService;
+use Mmm\Inert\ActionContainer;
+use Mmm\Inert\Exception\ActionNotFound;
+use Mmm\Inert\Exception\InvalidFactory;
+use Mmm\Inert\ServiceContainer;
+use Mmm\Inert\Tests\Sample\DependentAction;
+use Mmm\Inert\Tests\Sample\DependentActionFactory;
+use Mmm\Inert\Tests\Sample\SimpleAction;
+use Mmm\Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
 
 class ActionContainerTest extends TestCase

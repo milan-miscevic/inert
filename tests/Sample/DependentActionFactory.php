@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests\Sample;
+namespace Mmm\Inert\Tests\Sample;
 
-use Inert\BaseFactory;
-use Inert\ServiceContainer;
+use Mmm\Inert\BaseFactory;
+use Mmm\Inert\ServiceContainer;
 
 class DependentActionFactory extends BaseFactory
 {

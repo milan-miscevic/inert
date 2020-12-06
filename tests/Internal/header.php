@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Inert;
+namespace Mmm\Inert;
 
-use Inert\Tests\Internal\Counter;
+use Mmm\Inert\Tests\Internal\Counter;
 
 function header(string $header): void
 {

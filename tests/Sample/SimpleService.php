@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Inert\Tests\Sample;
+namespace Mmm\Inert\Tests\Sample;
 
 class SimpleService
 {

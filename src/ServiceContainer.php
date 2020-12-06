@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Inert;
+namespace Mmm\Inert;
 
 class ServiceContainer
 {
