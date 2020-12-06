@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Mmm\Inert;
 
+use Exception;
+
 class Application
 {
     private ActionContainer $actionContainer;
@@ -20,7 +22,7 @@ class Application
         try {
             $name = (string) ($_GET['action'] ?? 'index');
             $response = $this->actionContainer->get($name)->run();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $errorAction = new ErrorAction($ex);
             $errorAction->setViewFolder($this->viewFolder);
             $response = $errorAction->run();

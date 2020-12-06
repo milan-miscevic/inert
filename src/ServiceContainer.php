@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Mmm\Inert;
 
+use Closure;
+use Throwable;
+
 class ServiceContainer
 {
     /** @var (object|string)[] */
     private array $factories;
 
     /**
-     * @param (string|BaseFactory|\Closure)[] $factories
+     * @param (string|BaseFactory|Closure)[] $factories
      */
     public function __construct(array $factories)
     {
@@ -28,12 +31,12 @@ class ServiceContainer
                 $this->factories[$id] = new $this->factories[$id]();
             }
 
-            if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof \Closure) {
+            if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof Closure) {
                 $this->factories[$id] = call_user_func_array($this->factories[$id], [$this]);
             }
 
             return $this->factories[$id];
-        } catch (\Throwable $ex) {
+        } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);
         }
     }
