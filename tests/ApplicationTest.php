@@ -25,7 +25,7 @@ class ApplicationTest extends TestCase
             ->getMock();
 
         $action = function () {
-            return new class extends BaseAction {
+            return new class() extends BaseAction {
                 public function run(): Response
                 {
                     return new Response('This is a text.', []);
