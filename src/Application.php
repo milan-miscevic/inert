@@ -18,7 +18,7 @@ class Application
     public function run(): void
     {
         try {
-            $name = $_GET['action'] ?? 'index';
+            $name = (string) ($_GET['action'] ?? 'index');
             $response = $this->actionContainer->get($name)->run();
         } catch (\Exception $ex) {
             $errorAction = new ErrorAction($ex);
