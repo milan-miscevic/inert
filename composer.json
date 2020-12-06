@@ -44,10 +44,10 @@
     },
     "scripts": {
         "coverage": "phpunit --coverage-text",
-        "fix": "php-cs-fixer fix",
+        "fixer": "php-cs-fixer fix",
         "infection": "infection",
         "phpstan": "phpstan analyse",
         "psalm": "psalm --show-info=true",
-        "test": "phpunit"
+        "unit": "phpunit"
     }
 }
