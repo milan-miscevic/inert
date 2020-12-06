@@ -9,14 +9,14 @@ use Throwable;
 
 class ActionContainer
 {
-    /** @var (string|BaseFactory|Closure|BaseAction)[] */
+    /** @var (class-string<BaseAction>|BaseActionFactory|Closure)[] */
     private array $factories;
 
     private ServiceContainer $serviceContainer;
     private string $viewFolder;
 
     /**
-     * @param (string|BaseFactory|Closure)[] $factories
+     * @param (class-string<BaseAction>|BaseActionFactory|Closure)[] $factories
      */
     public function __construct(array $factories, ServiceContainer $serviceContainer, string $viewFolder)
     {
@@ -32,17 +32,20 @@ class ActionContainer
         }
 
         try {
-            if (is_string($this->factories[$id])) {
-                $this->factories[$id] = new $this->factories[$id]();
+            $factory = $this->factories[$id];
+
+            if (is_string($factory)) {
+                /** @psalm-suppress UnsafeInstantiation */
+                $factory = new $factory();
             }
 
-            if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof Closure) {
-                $this->factories[$id] = call_user_func_array($this->factories[$id], [$this->serviceContainer]);
+            if ($factory instanceof BaseActionFactory || $factory instanceof Closure) {
+                $factory = call_user_func_array($factory, [$this->serviceContainer]);
             }
 
-            $this->factories[$id]->setViewFolder($this->viewFolder);
+            $factory->setViewFolder($this->viewFolder);
 
-            return $this->factories[$id];
+            return $factory;
         } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);
         }

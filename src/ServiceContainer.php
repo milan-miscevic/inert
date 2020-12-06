@@ -9,11 +9,11 @@ use Throwable;
 
 class ServiceContainer
 {
-    /** @var (object|string)[] */
+    /** @var (class-string|BaseFactory|Closure)[] */
     private array $factories;
 
     /**
-     * @param (string|BaseFactory|Closure)[] $factories
+     * @param (class-string|BaseFactory|Closure)[] $factories
      */
     public function __construct(array $factories)
     {
@@ -27,15 +27,18 @@ class ServiceContainer
         }
 
         try {
-            if (is_string($this->factories[$id])) {
-                $this->factories[$id] = new $this->factories[$id]();
+            $factory = $this->factories[$id];
+
+            if (is_string($factory)) {
+                /** @psalm-suppress MixedMethodCall */
+                $factory = new $factory();
             }
 
-            if ($this->factories[$id] instanceof BaseFactory || $this->factories[$id] instanceof Closure) {
-                $this->factories[$id] = call_user_func_array($this->factories[$id], [$this]);
+            if ($factory instanceof BaseFactory || $factory instanceof Closure) {
+                $factory = call_user_func_array($factory, [$this]);
             }
 
-            return $this->factories[$id];
+            return $factory;
         } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);
         }
