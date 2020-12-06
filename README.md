@@ -7,7 +7,7 @@
 [![Type Coverage](https://shepherd.dev/github/milan-miscevic/inert/coverage.svg)](https://shepherd.dev/github/milan-miscevic/inert)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=milan-miscevic_inert&metric=alert_status)](https://sonarcloud.io/dashboard?id=milan-miscevic_inert)
 
-A mini PHP framework with basic MVC and service container support.
+This repository provides a mini PHP framework with basic MVC and service container support.
 
 ## Installation
 

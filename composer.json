@@ -1,7 +1,7 @@
 {
     "name": "milan-miscevic/inert",
     "type": "library",
-    "description": "A mini PHP framework with basic MVC and service container support",
+    "description": "Mini PHP framework with basic MVC and service container support",
     "keywords": [
         "inert",
         "php-framework",
