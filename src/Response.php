@@ -8,9 +8,7 @@ class Response
 {
     private string $content;
 
-    /**
-     * @var array<string, string>
-     */
+    /** @var array<string, string> */
     private array $headers;
 
     /**
