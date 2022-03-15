@@ -1,18 +1,21 @@
 {
     "name": "milan-miscevic/inert",
-    "type": "library",
     "description": "Mini PHP framework with basic MVC and service container support",
-    "keywords": [
-        "inert",
-        "php-framework",
-        "framework",
-        "mvc",
-        "service-container",
-        "basic",
-        "factory",
-        "action-container"
-    ],
     "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "action",
+        "action-container",
+        "controller",
+        "factory",
+        "framework",
+        "inert",
+        "mini-php-framework",
+        "mvc",
+        "php-framework",
+        "response",
+        "service-container"
+    ],
     "authors": [
         {
             "name": "Milan Miščević",
@@ -23,14 +26,11 @@
         "php": "^7.4 || ^8"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.19.3",
-        "infection/infection": "^0.20 || ^0.21",
-        "phpstan/phpstan": "^1.4.6",
-        "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^4.21"
-    },
-    "config": {
-        "sort-packages": true
+        "friendsofphp/php-cs-fixer": "^3.7.0",
+        "infection/infection": "^0.26.6",
+        "phpstan/phpstan": "^1.4.9",
+        "phpunit/phpunit": "^9.5.18",
+        "vimeo/psalm": "^4.22.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,12 +42,8 @@
             "Mmm\\Inert\\Tests\\": "tests/"
         }
     },
-    "scripts": {
-        "coverage": "phpunit --coverage-text",
-        "fixer": "php-cs-fixer fix",
-        "infection": "infection",
-        "phpstan": "phpstan analyse",
-        "psalm": "psalm --show-info=true",
-        "unit": "phpunit"
+    "config": {
+        "allow-plugins": {},
+        "sort-packages": true
     }
 }
