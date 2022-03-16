@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Exception;
 
-use RuntimeException;
+use DomainException;
 
-class InvalidFactory extends RuntimeException implements ExceptionInterface
+class InvalidFactory extends DomainException implements ExceptionInterface
 {
 }
