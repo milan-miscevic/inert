@@ -6,5 +6,5 @@ namespace Mmm\Inert;
 
 abstract class BaseActionFactory extends BaseFactory
 {
-    abstract public function __invoke(ServiceContainer $serviceContainer): BaseAction;
+    abstract public function __invoke(ServiceContainer $serviceContainer): Action;
 }

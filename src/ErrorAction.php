@@ -6,8 +6,10 @@ namespace Mmm\Inert;
 
 use Exception;
 
-class ErrorAction extends BaseAction
+class ErrorAction implements Action, Renderable
 {
+    use RenderableTrait;
+
     private Exception $exception;
 
     public function __construct(Exception $exception)

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Tests;
 
+use Mmm\Inert\Action;
 use Mmm\Inert\ActionContainer;
 use Mmm\Inert\Application;
-use Mmm\Inert\BaseAction;
 use Mmm\Inert\Exception\ActionNotFound;
 use Mmm\Inert\Response;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -25,7 +25,7 @@ class ApplicationTest extends TestCase
             ->getMock();
 
         $action = function () {
-            return new class() extends BaseAction {
+            return new class() implements Action {
                 public function run(): Response
                 {
                     return new Response('This is a text.', []);

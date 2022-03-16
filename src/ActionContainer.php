@@ -9,14 +9,14 @@ use Throwable;
 
 class ActionContainer
 {
-    /** @var (class-string<BaseAction>|BaseActionFactory|Closure)[] */
+    /** @var (class-string<Action>|class-string<BaseActionFactory>|BaseActionFactory|Closure)[] */
     private array $factories;
 
     private ServiceContainer $serviceContainer;
     private string $viewFolder;
 
     /**
-     * @param (class-string<BaseAction>|BaseActionFactory|Closure)[] $factories
+     * @param (class-string<Action>|class-string<BaseActionFactory>|BaseActionFactory|Closure)[] $factories
      */
     public function __construct(array $factories, ServiceContainer $serviceContainer, string $viewFolder)
     {
@@ -25,7 +25,7 @@ class ActionContainer
         $this->viewFolder = $viewFolder;
     }
 
-    public function get(string $id): BaseAction
+    public function get(string $id): Action
     {
         if (!isset($this->factories[$id])) {
             throw new Exception\ActionNotFound();
@@ -43,8 +43,11 @@ class ActionContainer
                 $factory = call_user_func_array($factory, [$this->serviceContainer]);
             }
 
-            $factory->setViewFolder($this->viewFolder);
+            if ($factory instanceof Renderable) {
+                $factory->setViewFolder($this->viewFolder);
+            }
 
+            /** @var Action $factory */
             return $factory;
         } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);

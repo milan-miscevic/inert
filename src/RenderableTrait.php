@@ -6,21 +6,19 @@ namespace Mmm\Inert;
 
 use Mmm\Inert\Exception\ViewFileNotFound;
 
-abstract class BaseAction
+trait RenderableTrait
 {
-    private string $viewFolder;
+    private string $viewFolder = '';
 
     public function setViewFolder(string $viewFolder): void
     {
         $this->viewFolder = $viewFolder;
     }
 
-    abstract public function run(): Response;
-
     /**
      * @param mixed[] $args
      */
-    protected function render(string $file, array $args = []): Response
+    public function render(string $file, array $args = []): Response
     {
         $viewFile = $this->viewFolder . DIRECTORY_SEPARATOR . $file . '.php';
 

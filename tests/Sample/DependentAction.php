@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Tests\Sample;
 
-use Mmm\Inert\BaseAction;
+use Mmm\Inert\Action;
 use Mmm\Inert\Response;
 
-class DependentAction extends BaseAction
+class DependentAction implements Action
 {
     private SimpleService $simpleService;
 
