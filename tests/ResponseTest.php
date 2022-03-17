@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
-    const CONTENT = 'Content';
+    private const CONTENT = 'Content';
 
     protected function setUp(): void
     {
@@ -22,14 +22,14 @@ class ResponseTest extends TestCase
         require_once 'Internal' . DIRECTORY_SEPARATOR . 'header.php';
 
         $headers = ['content-type' => 'text/html'];
-        $response = new Response(static::CONTENT, $headers);
+        $response = new Response(self::CONTENT, $headers);
 
         ob_start();
         $response->render();
         $content = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame(static::CONTENT, $content);
+        $this->assertSame(self::CONTENT, $content);
         $this->assertSame(count($headers), Counter::getCalls('header'));
     }
 }

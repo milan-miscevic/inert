@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Tests;
 
+use Mmm\Inert\Action;
 use Mmm\Inert\ActionContainer;
 use Mmm\Inert\Exception\ActionNotFound;
 use Mmm\Inert\Exception\InvalidFactory;
@@ -21,36 +22,23 @@ class ActionContainerTest extends TestCase
 
     public function testClassDefinition(): void
     {
-        $config = [
+        $actions = [
             self::SIMPLE => SimpleAction::class,
         ];
 
-        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
-
-        $this->assertInstanceOf(SimpleAction::class, $actionContainer->get(self::SIMPLE));
-    }
-
-    public function testFunctionDefinition(): void
-    {
-        $config = [
-            self::SIMPLE => function () {
-                return new SimpleAction();
-            },
-        ];
-
-        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
+        $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
 
         $this->assertInstanceOf(SimpleAction::class, $actionContainer->get(self::SIMPLE));
     }
 
     public function testFactoryDefinition(): void
     {
-        $services = [
-            SimpleService::class => SimpleService::class,
-        ];
-
         $actions = [
             self::DEPENDENT => DependentActionFactory::class,
+        ];
+
+        $services = [
+            SimpleService::class => SimpleService::class,
         ];
 
         $actionContainer = new ActionContainer($actions, new ServiceContainer($services), '');
@@ -58,11 +46,24 @@ class ActionContainerTest extends TestCase
         $this->assertInstanceOf(DependentAction::class, $actionContainer->get(self::DEPENDENT));
     }
 
+    public function testClosureDefinition(): void
+    {
+        $actions = [
+            self::SIMPLE => function (): Action {
+                return new SimpleAction();
+            },
+        ];
+
+        $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
+
+        $this->assertInstanceOf(SimpleAction::class, $actionContainer->get(self::SIMPLE));
+    }
+
     public function testActionNotFound(): void
     {
-        $config = [];
+        $actions = [];
 
-        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
+        $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
 
         $this->expectException(ActionNotFound::class);
         $this->expectExceptionCode(0);
@@ -72,13 +73,13 @@ class ActionContainerTest extends TestCase
 
     public function testInvalidFactory(): void
     {
-        $config = [
+        $actions = [
             self::SIMPLE => function () {
                 return null;
             },
         ];
 
-        $actionContainer = new ActionContainer($config, new ServiceContainer([]), '');
+        $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
 
         $this->expectException(InvalidFactory::class);
         $this->expectExceptionCode(0);

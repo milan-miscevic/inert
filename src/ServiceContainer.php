@@ -38,6 +38,7 @@ class ServiceContainer
                 $factory = call_user_func_array($factory, [$this]);
             }
 
+            /** @var object $factory */
             return $factory;
         } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);

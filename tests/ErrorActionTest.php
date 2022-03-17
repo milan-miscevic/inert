@@ -21,6 +21,6 @@ class ErrorActionTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame(static::ERROR_MESSAGE, $content);
+        $this->assertSame(self::ERROR_MESSAGE, $content);
     }
 }

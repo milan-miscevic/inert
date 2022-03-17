@@ -25,12 +25,11 @@ class ServiceContainerTest extends TestCase
         $this->assertInstanceOf(SimpleService::class, $serviceContainer->get(SimpleService::class));
     }
 
-    public function testFunctionDefinition(): void
+    public function testFactoryDefinition(): void
     {
         $config = [
-            DependentService::class => function () {
-                return new DependentService(new SimpleService());
-            },
+            DependentService::class => DependentServiceFactory::class,
+            SimpleService::class => SimpleService::class,
         ];
 
         $serviceContainer = new ServiceContainer($config);
@@ -38,11 +37,12 @@ class ServiceContainerTest extends TestCase
         $this->assertInstanceOf(DependentService::class, $serviceContainer->get(DependentService::class));
     }
 
-    public function testFactoryDefinition(): void
+    public function testClosureDefinition(): void
     {
         $config = [
-            DependentService::class => DependentServiceFactory::class,
-            SimpleService::class => SimpleService::class,
+            DependentService::class => function (): object {
+                return new DependentService(new SimpleService());
+            },
         ];
 
         $serviceContainer = new ServiceContainer($config);

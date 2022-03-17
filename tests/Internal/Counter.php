@@ -11,20 +11,20 @@ class Counter
 
     public static function reset(): void
     {
-        static::$calls = [];
+        self::$calls = [];
     }
 
     public static function incrementCalls(string $name): void
     {
-        if (!isset(static::$calls[$name])) {
-            static::$calls[$name] = 0;
+        if (!isset(self::$calls[$name])) {
+            self::$calls[$name] = 0;
         }
 
-        static::$calls[$name]++;
+        self::$calls[$name]++;
     }
 
     public static function getCalls(string $name): int
     {
-        return static::$calls[$name];
+        return self::$calls[$name];
     }
 }

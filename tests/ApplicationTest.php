@@ -43,7 +43,7 @@ class ApplicationTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame(static::SUCCESSFUL_MESSAGE, $content);
+        $this->assertSame(self::SUCCESSFUL_MESSAGE, $content);
     }
 
     public function testActionNotFound(): void
@@ -64,6 +64,6 @@ class ApplicationTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame(static::ERROR_MESSAGE, $content);
+        $this->assertSame(self::ERROR_MESSAGE, $content);
     }
 }
