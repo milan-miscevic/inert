@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Tests\Sample;
 
-use Mmm\Inert\BaseActionFactory;
+use Mmm\Inert\ActionFactory;
 use Mmm\Inert\ServiceContainer;
 
-class DependentActionFactory extends BaseActionFactory
+class DependentActionFactory implements ActionFactory
 {
     public function __invoke(ServiceContainer $serviceContainer): DependentAction
     {

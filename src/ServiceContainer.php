@@ -34,7 +34,7 @@ class ServiceContainer
                 $factory = new $factory();
             }
 
-            if ($factory instanceof BaseFactory || $factory instanceof Closure) {
+            if ($factory instanceof ServiceFactory || $factory instanceof Closure) {
                 $factory = call_user_func_array($factory, [$this]);
             }
 
