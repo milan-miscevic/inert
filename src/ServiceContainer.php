@@ -9,11 +9,11 @@ use Throwable;
 
 class ServiceContainer
 {
-    /** @var (class-string|BaseFactory|Closure)[] */
+    /** @var (class-string|Closure)[] */
     private array $factories;
 
     /**
-     * @param (class-string|BaseFactory|Closure)[] $factories
+     * @param (class-string|Closure)[] $factories
      */
     public function __construct(array $factories)
     {
