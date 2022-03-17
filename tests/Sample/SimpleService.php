@@ -8,6 +8,6 @@ class SimpleService
 {
     public function simpleMethod(): string
     {
-        return 'simple';
+        return 'simpleValue';
     }
 }

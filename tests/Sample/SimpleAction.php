@@ -11,6 +11,6 @@ class SimpleAction implements Action
 {
     public function run(): Response
     {
-        return new Response('');
+        return new Response('simpleResponse');
     }
 }
