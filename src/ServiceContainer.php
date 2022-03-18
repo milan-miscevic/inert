@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Mmm\Inert;
 
 use Closure;
+use Psr\Container\ContainerInterface;
 use Throwable;
 
-class ServiceContainer
+class ServiceContainer implements ContainerInterface
 {
     /** @var (class-string|Closure)[] */
     private array $factories;
@@ -20,9 +21,14 @@ class ServiceContainer
         $this->factories = $factories;
     }
 
+    public function has(string $id): bool
+    {
+        return isset($this->factories[$id]);
+    }
+
     public function get(string $id): object
     {
-        if (!isset($this->factories[$id])) {
+        if (!$this->has($id)) {
             throw new Exception\ServiceNotFound();
         }
 
