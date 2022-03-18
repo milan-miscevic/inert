@@ -9,14 +9,14 @@ use Throwable;
 
 class ActionContainer
 {
-    /** @var (class-string<Action>|class-string<ActionFactory>|Closure)[] */
+    /** @var (class-string|Closure)[] */
     private array $factories;
 
     private ServiceContainer $serviceContainer;
     private string $viewFolder;
 
     /**
-     * @param (class-string<Action>|class-string<ActionFactory>|Closure)[] $factories
+     * @param (class-string|Closure)[] $factories
      */
     public function __construct(array $factories, ServiceContainer $serviceContainer, string $viewFolder)
     {
@@ -35,7 +35,7 @@ class ActionContainer
             $factory = $this->factories[$id];
 
             if (is_string($factory)) {
-                /** @psalm-suppress UnsafeInstantiation */
+                /** @psalm-suppress MixedMethodCall */
                 $factory = new $factory();
             }
 
