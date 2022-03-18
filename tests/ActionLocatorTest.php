@@ -74,7 +74,7 @@ class ActionContainerTest extends TestCase
     public function testInvalidFactory(): void
     {
         $actions = [
-            self::SIMPLE => function () {
+            self::SIMPLE => function (): ?Action {
                 return null;
             },
         ];

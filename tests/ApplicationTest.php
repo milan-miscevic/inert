@@ -24,7 +24,7 @@ class ApplicationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $action = function () {
+        $action = function (): Action {
             return new class() implements Action {
                 public function run(): Response
                 {
