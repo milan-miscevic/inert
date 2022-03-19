@@ -6,6 +6,7 @@ namespace Mmm\Inert;
 
 use Mmm\Inert\Tests\Internal\Counter;
 
+/** @psalm-suppress UnusedParam */
 function header(string $header): void
 {
     Counter::incrementCalls('header');

@@ -19,6 +19,7 @@ class ResponseTest extends TestCase
 
     public function testWithHeaders(): void
     {
+        /** @psalm-suppress MissingFile */
         require_once 'Internal' . DIRECTORY_SEPARATOR . 'header.php';
 
         $headers = ['content-type' => 'text/html'];
