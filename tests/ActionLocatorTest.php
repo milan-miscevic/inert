@@ -74,9 +74,7 @@ class ActionContainerTest extends TestCase
     public function testInvalidFactory(): void
     {
         $actions = [
-            self::SIMPLE => function (): ?Action {
-                return null;
-            },
+            self::SIMPLE => 666,
         ];
 
         $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');

@@ -65,9 +65,7 @@ class ServiceContainerTest extends TestCase
     public function testInvalidFactory(): void
     {
         $config = [
-            SimpleService::class => function (): ?object {
-                return null;
-            },
+            SimpleService::class => 666,
         ];
 
         $serviceContainer = new ServiceContainer($config);
