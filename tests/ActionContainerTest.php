@@ -14,6 +14,7 @@ use Mmm\Inert\Tests\Sample\DependentActionFactory;
 use Mmm\Inert\Tests\Sample\SimpleAction;
 use Mmm\Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class ActionContainerTest extends TestCase
 {
@@ -74,7 +75,9 @@ class ActionContainerTest extends TestCase
     public function testInvalidFactory(): void
     {
         $actions = [
-            self::SIMPLE => 666,
+            self::SIMPLE => function (): Action {
+                throw new RuntimeException();
+            },
         ];
 
         $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');

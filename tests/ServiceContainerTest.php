@@ -11,6 +11,7 @@ use Mmm\Inert\Tests\Sample\DependentService;
 use Mmm\Inert\Tests\Sample\DependentServiceFactory;
 use Mmm\Inert\Tests\Sample\SimpleService;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class ServiceContainerTest extends TestCase
 {
@@ -65,7 +66,9 @@ class ServiceContainerTest extends TestCase
     public function testInvalidFactory(): void
     {
         $config = [
-            SimpleService::class => 666,
+            SimpleService::class => function (): object {
+                throw new RuntimeException();
+            },
         ];
 
         $serviceContainer = new ServiceContainer($config);

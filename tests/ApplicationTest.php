@@ -33,7 +33,9 @@ class ApplicationTest extends TestCase
             };
         };
 
-        $actionContainer->method('get')
+        $actionContainer->expects($this->once())
+            ->method('get')
+            ->with('index')
             ->willReturnCallback($action);
 
         $application = new Application($actionContainer, '');
@@ -48,12 +50,16 @@ class ApplicationTest extends TestCase
 
     public function testActionNotFound(): void
     {
+        $_GET['action'] = 'not-existing';
+
         /** @var ActionContainer&MockObject */
         $actionContainer = $this->getMockBuilder(ActionContainer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $actionContainer->method('get')
+        $actionContainer->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('not-existing'))
             ->willThrowException(new ActionNotFound());
 
         $viewFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view';

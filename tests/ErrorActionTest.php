@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Tests;
 
+use Exception;
 use Mmm\Inert\ErrorAction;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +14,7 @@ class ErrorActionTest extends TestCase
 
     public function testErrorPage(): void
     {
-        $action = new ErrorAction(new \Exception());
+        $action = new ErrorAction(new Exception());
         $action->setViewFolder(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view');
 
         ob_start();
