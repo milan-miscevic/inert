@@ -33,19 +33,25 @@ class ServiceContainer implements ContainerInterface
         }
 
         try {
-            $factory = $this->factories[$id];
-
-            if (is_string($factory)) {
+            if ($this->factories[$id] instanceof Closure) {
+                /** @var object $service */
+                $service = call_user_func_array($this->factories[$id], [$this]);
+            } else {
                 /** @psalm-suppress MixedMethodCall */
-                $factory = new $factory();
+                $serviceOrFactory = new $this->factories[$id]();
+
+                if ($serviceOrFactory instanceof ServiceFactory) {
+                    /**
+                     * @var object $service
+                     * @psalm-suppress UnnecessaryVarAnnotation
+                     */
+                    $service = call_user_func_array($serviceOrFactory, [$this]);
+                } else {
+                    $service = $serviceOrFactory;
+                }
             }
 
-            if ($factory instanceof ServiceFactory || $factory instanceof Closure) {
-                $factory = call_user_func_array($factory, [$this]);
-            }
-
-            /** @var object $factory */
-            return $factory;
+            return $service;
         } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);
         }
