@@ -38,23 +38,30 @@ class ActionContainer implements ContainerInterface
         }
 
         try {
-            $factory = $this->factories[$id];
-
-            if (is_string($factory)) {
+            if ($this->factories[$id] instanceof Closure) {
+                /** @var Action $action */
+                $action = call_user_func_array($this->factories[$id], [$this->serviceContainer]);
+            } else {
                 /** @psalm-suppress MixedMethodCall */
-                $factory = new $factory();
+                $actionOrFactory = new $this->factories[$id]();
+
+                if ($actionOrFactory instanceof ServiceFactory) {
+                    /**
+                     * @var Action $action
+                     * @psalm-suppress UnnecessaryVarAnnotation
+                     */
+                    $action = call_user_func_array($actionOrFactory, [$this->serviceContainer]);
+                } else {
+                    /** @var Action $action */
+                    $action = $actionOrFactory;
+                }
             }
 
-            if ($factory instanceof ActionFactory || $factory instanceof Closure) {
-                $factory = call_user_func_array($factory, [$this->serviceContainer]);
+            if ($action instanceof Renderable) {
+                $action->setViewFolder($this->viewFolder);
             }
 
-            if ($factory instanceof Renderable) {
-                $factory->setViewFolder($this->viewFolder);
-            }
-
-            /** @var Action $factory */
-            return $factory;
+            return $action;
         } catch (Throwable $ex) {
             throw new Exception\InvalidFactory('', 0, $ex);
         }
