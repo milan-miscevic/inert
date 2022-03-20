@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    private const ERROR_MESSAGE = 'This is an error page.';
+    private const ERROR_MESSAGE = 'Error: ';
     private const SUCCESSFUL_MESSAGE = 'This is a text.';
 
     public function testActionSuccessful(): void
@@ -35,7 +35,7 @@ class ApplicationTest extends TestCase
 
         $actionContainer->expects($this->once())
             ->method('get')
-            ->with('index')
+            ->with($this->equalTo('index'))
             ->willReturnCallback($action);
 
         $application = new Application($actionContainer, '');
@@ -50,7 +50,7 @@ class ApplicationTest extends TestCase
 
     public function testActionNotFound(): void
     {
-        $_GET['action'] = 'not-existing';
+        $_GET['action'] = 'non-existing';
 
         /** @var ActionContainer&MockObject */
         $actionContainer = $this->getMockBuilder(ActionContainer::class)
@@ -59,7 +59,7 @@ class ApplicationTest extends TestCase
 
         $actionContainer->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('not-existing'))
+            ->with($this->equalTo('non-existing'))
             ->willThrowException(new ActionNotFound());
 
         $viewFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view';

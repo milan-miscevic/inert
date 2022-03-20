@@ -1,1 +1,1 @@
-This is an error page.
+Error: <?= $exception->getMessage() ?>

@@ -10,11 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class ErrorActionTest extends TestCase
 {
-    private const ERROR_MESSAGE = 'This is an error page.';
-
     public function testErrorPage(): void
     {
-        $action = new ErrorAction(new Exception());
+        $exception = new Exception('General error');
+        $action = new ErrorAction($exception);
         $action->setViewFolder(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view');
 
         ob_start();
@@ -22,6 +21,6 @@ class ErrorActionTest extends TestCase
         $content = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame(self::ERROR_MESSAGE, $content);
+        $this->assertSame('Error: General error', $content);
     }
 }
