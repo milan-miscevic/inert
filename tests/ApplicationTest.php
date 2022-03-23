@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    private const ERROR_MESSAGE = 'Error: ';
     private const SUCCESSFUL_MESSAGE = 'This is a text.';
 
     public function testActionSuccessful(): void
@@ -24,11 +23,20 @@ class ApplicationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $action = function (): Action {
-            return new class() implements Action {
+        $response = new Response(self::SUCCESSFUL_MESSAGE, []);
+
+        $action = function () use ($response): Action {
+            return new class($response) implements Action {
+                private Response $response;
+
+                public function __construct(Response $response)
+                {
+                    $this->response = $response;
+                }
+
                 public function run(): Response
                 {
-                    return new Response('This is a text.', []);
+                    return $this->response;
                 }
             };
         };
@@ -40,12 +48,7 @@ class ApplicationTest extends TestCase
 
         $application = new Application($actionContainer, '');
 
-        ob_start();
-        $application->run();
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertSame(self::SUCCESSFUL_MESSAGE, $content);
+        $this->assertSame($response, $application->run());
     }
 
     public function testActionNotFound(): void
@@ -65,11 +68,6 @@ class ApplicationTest extends TestCase
         $viewFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view';
         $application = new Application($actionContainer, $viewFolder);
 
-        ob_start();
-        $application->run();
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertSame(self::ERROR_MESSAGE, $content);
+        $this->assertSame('Error: ', $application->run()->getContent());
     }
 }

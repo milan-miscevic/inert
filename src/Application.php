@@ -17,7 +17,7 @@ class Application
         $this->viewFolder = $viewFolder;
     }
 
-    public function run(): void
+    public function run(): Response
     {
         try {
             $name = (string) ($_GET['action'] ?? 'index');
@@ -28,6 +28,6 @@ class Application
             $response = $errorAction->run();
         }
 
-        $response->render();
+        return $response;
     }
 }
