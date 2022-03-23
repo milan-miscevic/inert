@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 class ResponseTest extends TestCase
 {
     private const CONTENT = 'Content';
+    private const HEADERS = ['content-type' => 'text/html'];
 
     protected function setUp(): void
     {
@@ -22,15 +23,17 @@ class ResponseTest extends TestCase
         /** @psalm-suppress MissingFile */
         require_once 'Internal' . DIRECTORY_SEPARATOR . 'header.php';
 
-        $headers = ['content-type' => 'text/html'];
-        $response = new Response(self::CONTENT, $headers);
+        $response = new Response(self::CONTENT, self::HEADERS);
+
+        $this->assertSame(self::CONTENT, $response->getContent());
+        $this->assertSame(self::HEADERS, $response->getHeaders());
 
         ob_start();
         $response->render();
         $content = ob_get_contents();
         ob_end_clean();
 
+        $this->assertSame(count(self::HEADERS), Counter::getCalls('header'));
         $this->assertSame(self::CONTENT, $content);
-        $this->assertSame(count($headers), Counter::getCalls('header'));
     }
 }

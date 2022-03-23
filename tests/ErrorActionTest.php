@@ -16,11 +16,6 @@ class ErrorActionTest extends TestCase
         $action = new ErrorAction($exception);
         $action->setViewFolder(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view');
 
-        ob_start();
-        $action->run()->render();
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertSame('Error: General error', $content);
+        $this->assertSame('Error: General error', $action->run()->getContent());
     }
 }

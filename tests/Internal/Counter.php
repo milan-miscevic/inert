@@ -25,6 +25,6 @@ class Counter
 
     public static function getCalls(string $name): int
     {
-        return self::$calls[$name];
+        return self::$calls[$name] ?? 0;
     }
 }
