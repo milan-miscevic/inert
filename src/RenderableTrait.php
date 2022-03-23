@@ -30,12 +30,8 @@ trait RenderableTrait
 
         ob_start();
         require $viewFile;
-        $content = ob_get_contents();
+        $content = (string) ob_get_contents();
         ob_end_clean();
-
-        if ($content === false) {
-            $content = '';
-        }
 
         return new Response($content);
     }
