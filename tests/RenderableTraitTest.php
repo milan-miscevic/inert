@@ -45,6 +45,7 @@ class RenderableTraitTest extends TestCase
         $renderableAction->setViewFolder($viewFolder);
 
         $this->expectException(ViewFileNotFound::class);
+        $this->expectExceptionMessage('Mmm\Inert\Exception\ViewFileNotFound: non-existing');
         $this->expectExceptionCode(0);
 
         $renderableAction->run();

@@ -82,6 +82,7 @@ class ActionContainerTest extends TestCase
         $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
 
         $this->expectException(ActionNotFound::class);
+        $this->expectExceptionMessage('Mmm\Inert\Exception\ActionNotFound: simple');
         $this->expectExceptionCode(0);
 
         $actionContainer->get(self::SIMPLE);
@@ -98,6 +99,7 @@ class ActionContainerTest extends TestCase
         $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
 
         $this->expectException(InvalidFactory::class);
+        $this->expectExceptionMessage('Mmm\Inert\Exception\InvalidFactory: ');
         $this->expectExceptionCode(0);
 
         $actionContainer->get(self::SIMPLE);

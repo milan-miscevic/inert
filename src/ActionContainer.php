@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Mmm\Inert;
 
 use Closure;
+use Mmm\Inert\Exception\ActionNotFound;
+use Mmm\Inert\Exception\InvalidFactory;
 use Psr\Container\ContainerInterface;
 use Throwable;
 
@@ -34,7 +36,7 @@ class ActionContainer implements ContainerInterface
     public function get(string $id): Action
     {
         if (!$this->has($id)) {
-            throw new Exception\ActionNotFound();
+            throw new ActionNotFound(ActionNotFound::class . ': ' . $id);
         }
 
         try {
@@ -63,7 +65,7 @@ class ActionContainer implements ContainerInterface
 
             return $action;
         } catch (Throwable $ex) {
-            throw new Exception\InvalidFactory('', 0, $ex);
+            throw new InvalidFactory(InvalidFactory::class . ': ' . $ex->getMessage(), 0, $ex);
         }
     }
 }

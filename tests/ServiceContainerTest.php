@@ -58,6 +58,7 @@ class ServiceContainerTest extends TestCase
         $serviceContainer = new ServiceContainer($config);
 
         $this->expectException(ServiceNotFound::class);
+        $this->expectExceptionMessage('Mmm\Inert\Exception\ServiceNotFound: Mmm\Inert\Tests\Sample\SimpleService');
         $this->expectExceptionCode(0);
 
         $serviceContainer->get(SimpleService::class);
@@ -74,6 +75,7 @@ class ServiceContainerTest extends TestCase
         $serviceContainer = new ServiceContainer($config);
 
         $this->expectException(InvalidFactory::class);
+        $this->expectExceptionMessage('Mmm\Inert\Exception\InvalidFactory: ');
         $this->expectExceptionCode(0);
 
         $serviceContainer->get(SimpleService::class);

@@ -27,7 +27,7 @@ trait RenderableTrait
         $viewFile = $viewFolder . DIRECTORY_SEPARATOR . $file . '.php';
 
         if (!file_exists($viewFile)) {
-            throw new ViewFileNotFound();
+            throw new ViewFileNotFound(ViewFileNotFound::class . ': ' . $file);
         }
 
         extract($args);

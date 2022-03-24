@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Mmm\Inert;
 
 use Closure;
+use Mmm\Inert\Exception\InvalidFactory;
+use Mmm\Inert\Exception\ServiceNotFound;
 use Psr\Container\ContainerInterface;
 use Throwable;
 
@@ -29,7 +31,7 @@ class ServiceContainer implements ContainerInterface
     public function get(string $id): object
     {
         if (!$this->has($id)) {
-            throw new Exception\ServiceNotFound();
+            throw new ServiceNotFound(ServiceNotFound::class . ': ' . $id);
         }
 
         try {
@@ -53,7 +55,7 @@ class ServiceContainer implements ContainerInterface
 
             return $service;
         } catch (Throwable $ex) {
-            throw new Exception\InvalidFactory('', 0, $ex);
+            throw new InvalidFactory(InvalidFactory::class . ': ' . $ex->getMessage(), 0, $ex);
         }
     }
 }
