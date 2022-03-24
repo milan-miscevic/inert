@@ -10,20 +10,20 @@ use Mmm\Inert\Response;
 
 class RenderableAction implements Action, Renderable
 {
-    private string $viewFolder = '';
+    private ?string $viewFolder = null;
 
     public function run(): Response
     {
         return $this->render('non-existing');
     }
 
-    public function setViewFolder(string $viewFolder): void
+    public function setViewFolder(?string $viewFolder): void
     {
         $this->viewFolder = $viewFolder;
     }
 
     public function render(string $file, array $args = []): Response
     {
-        return new Response($this->viewFolder);
+        return new Response((string) $this->viewFolder);
     }
 }

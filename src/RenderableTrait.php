@@ -8,9 +8,9 @@ use Mmm\Inert\Exception\ViewFileNotFound;
 
 trait RenderableTrait
 {
-    private string $viewFolder = '';
+    private ?string $viewFolder = null;
 
-    public function setViewFolder(string $viewFolder): void
+    public function setViewFolder(?string $viewFolder): void
     {
         $this->viewFolder = $viewFolder;
     }
@@ -20,7 +20,11 @@ trait RenderableTrait
      */
     public function render(string $file, array $args = []): Response
     {
-        $viewFile = $this->viewFolder . DIRECTORY_SEPARATOR . $file . '.php';
+        $viewFolder = $this->viewFolder === null
+            ? dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'view'
+            : $this->viewFolder;
+
+        $viewFile = $viewFolder . DIRECTORY_SEPARATOR . $file . '.php';
 
         if (!file_exists($viewFile)) {
             throw new ViewFileNotFound();

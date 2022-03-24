@@ -14,12 +14,12 @@ class ActionContainer implements ContainerInterface
     private array $factories;
 
     private ServiceContainer $serviceContainer;
-    private string $viewFolder;
+    private ?string $viewFolder;
 
     /**
      * @param (class-string|Closure)[] $factories
      */
-    public function __construct(array $factories, ServiceContainer $serviceContainer, string $viewFolder)
+    public function __construct(array $factories, ServiceContainer $serviceContainer, ?string $viewFolder = null)
     {
         $this->factories = $factories;
         $this->serviceContainer = $serviceContainer;

@@ -70,9 +70,9 @@ class ActionContainerTest extends TestCase
 
         $actionContainer = new ActionContainer($actions, new ServiceContainer([]), 'view-folder');
 
-        $renderableAction = $actionContainer->get(self::RENDERABLE);
-        $this->assertInstanceOf(RenderableAction::class, $renderableAction);
-        $this->assertSame('view-folder', $renderableAction->run()->getContent());
+        $action = $actionContainer->get(self::RENDERABLE);
+        $this->assertInstanceOf(RenderableAction::class, $action);
+        $this->assertSame('view-folder', $action->run()->getContent());
     }
 
     public function testActionNotFound(): void

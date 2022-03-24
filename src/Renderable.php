@@ -6,7 +6,7 @@ namespace Mmm\Inert;
 
 interface Renderable
 {
-    public function setViewFolder(string $viewFolder): void;
+    public function setViewFolder(?string $viewFolder): void;
 
     /**
      * @param mixed[] $args

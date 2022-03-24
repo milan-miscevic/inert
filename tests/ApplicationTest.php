@@ -65,8 +65,7 @@ class ApplicationTest extends TestCase
             ->with($this->equalTo('non-existing'))
             ->willThrowException(new ActionNotFound());
 
-        $viewFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view';
-        $application = new Application($actionContainer, $viewFolder);
+        $application = new Application($actionContainer);
 
         $this->assertSame('Error: ', $application->run()->getContent());
     }

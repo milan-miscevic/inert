@@ -9,9 +9,9 @@ use Exception;
 class Application
 {
     private ActionContainer $actionContainer;
-    private string $viewFolder;
+    private ?string $viewFolder;
 
-    public function __construct(ActionContainer $actionContainer, string $viewFolder)
+    public function __construct(ActionContainer $actionContainer, ?string $viewFolder = null)
     {
         $this->actionContainer = $actionContainer;
         $this->viewFolder = $viewFolder;
