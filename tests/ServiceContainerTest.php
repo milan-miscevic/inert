@@ -68,14 +68,14 @@ class ServiceContainerTest extends TestCase
     {
         $config = [
             SimpleService::class => function (): object {
-                throw new RuntimeException();
+                throw new RuntimeException('Random exception');
             },
         ];
 
         $serviceContainer = new ServiceContainer($config);
 
         $this->expectException(InvalidFactory::class);
-        $this->expectExceptionMessage('Mmm\Inert\Exception\InvalidFactory: ');
+        $this->expectExceptionMessage('Mmm\Inert\Exception\InvalidFactory: Random exception');
         $this->expectExceptionCode(0);
 
         $serviceContainer->get(SimpleService::class);

@@ -92,14 +92,14 @@ class ActionContainerTest extends TestCase
     {
         $actions = [
             self::SIMPLE => function (): Action {
-                throw new RuntimeException();
+                throw new RuntimeException('Random exception');
             },
         ];
 
         $actionContainer = new ActionContainer($actions, new ServiceContainer([]), '');
 
         $this->expectException(InvalidFactory::class);
-        $this->expectExceptionMessage('Mmm\Inert\Exception\InvalidFactory: ');
+        $this->expectExceptionMessage('Mmm\Inert\Exception\InvalidFactory: Random exception');
         $this->expectExceptionCode(0);
 
         $actionContainer->get(self::SIMPLE);
