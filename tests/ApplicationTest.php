@@ -53,7 +53,8 @@ class ApplicationTest extends TestCase
 
     public function testActionNotFound(): void
     {
-        $_GET['action'] = 'non-existing';
+        $actionId = 'non-existing';
+        $_GET['action'] = $actionId;
 
         /** @var ActionContainer&MockObject */
         $actionContainer = $this->getMockBuilder(ActionContainer::class)
@@ -62,11 +63,14 @@ class ApplicationTest extends TestCase
 
         $actionContainer->expects($this->once())
             ->method('get')
-            ->with($this->equalTo('non-existing'))
-            ->willThrowException(new ActionNotFound());
+            ->with($this->equalTo($actionId))
+            ->willThrowException(new ActionNotFound(ActionNotFound::class . ': ' . $actionId));
 
         $application = new Application($actionContainer);
 
-        $this->assertSame('Error: ', $application->run()->getContent());
+        $this->assertSame(
+            'Error: Mmm\Inert\Exception\ActionNotFound: non-existing',
+            $application->run()->getContent()
+        );
     }
 }
