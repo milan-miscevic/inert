@@ -16,13 +16,22 @@ class ApplicationTest extends TestCase
 {
     private const SUCCESSFUL_MESSAGE = 'This is a text.';
 
-    public function testActionSuccessful(): void
+    /** @var ActionContainer&MockObject */
+    protected $actionContainer;
+
+    protected Application $application;
+
+    protected function setUp(): void
     {
-        /** @var ActionContainer&MockObject */
-        $actionContainer = $this->getMockBuilder(ActionContainer::class)
+        $this->actionContainer = $this->getMockBuilder(ActionContainer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->application = new Application($this->actionContainer);
+    }
+
+    public function testActionSuccessful(): void
+    {
         $response = new Response(self::SUCCESSFUL_MESSAGE, []);
 
         $action = function () use ($response): Action {
@@ -41,14 +50,12 @@ class ApplicationTest extends TestCase
             };
         };
 
-        $actionContainer->expects($this->once())
+        $this->actionContainer->expects($this->once())
             ->method('get')
             ->with($this->equalTo('index'))
             ->willReturnCallback($action);
 
-        $application = new Application($actionContainer, '');
-
-        $this->assertSame($response, $application->run());
+        $this->assertSame($response, $this->application->run());
     }
 
     public function testActionNotFound(): void
@@ -56,21 +63,14 @@ class ApplicationTest extends TestCase
         $actionId = 'non-existing';
         $_GET['action'] = $actionId;
 
-        /** @var ActionContainer&MockObject */
-        $actionContainer = $this->getMockBuilder(ActionContainer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $actionContainer->expects($this->once())
+        $this->actionContainer->expects($this->once())
             ->method('get')
             ->with($this->equalTo($actionId))
             ->willThrowException(new ActionNotFound(ActionNotFound::class . ': ' . $actionId));
 
-        $application = new Application($actionContainer);
-
         $this->assertSame(
             'Error: Mmm\Inert\Exception\ActionNotFound: non-existing',
-            $application->run()->getContent()
+            $this->application->run()->getContent()
         );
     }
 }
