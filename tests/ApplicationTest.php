@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Mmm\Inert\Tests;
 
+use Mmm\Inert\Action;
 use Mmm\Inert\ActionContainer;
 use Mmm\Inert\Application;
-use Mmm\Inert\BaseAction;
 use Mmm\Inert\Exception\ActionNotFound;
 use Mmm\Inert\Response;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -14,56 +14,63 @@ use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
-    private const ERROR_MESSAGE = 'This is an error page.';
     private const SUCCESSFUL_MESSAGE = 'This is a text.';
 
-    public function testActionSuccessful(): void
+    /** @var ActionContainer&MockObject */
+    protected $actionContainer;
+
+    protected Application $application;
+
+    protected function setUp(): void
     {
-        /** @var ActionContainer&MockObject */
-        $actionContainer = $this->getMockBuilder(ActionContainer::class)
+        $this->actionContainer = $this->getMockBuilder(ActionContainer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $action = function () {
-            return new class() extends BaseAction {
+        $this->application = new Application($this->actionContainer);
+    }
+
+    public function testActionSuccessful(): void
+    {
+        $response = new Response(self::SUCCESSFUL_MESSAGE, []);
+
+        $action = function () use ($response): Action {
+            return new class($response) implements Action {
+                private Response $response;
+
+                public function __construct(Response $response)
+                {
+                    $this->response = $response;
+                }
+
                 public function run(): Response
                 {
-                    return new Response('This is a text.', []);
+                    return $this->response;
                 }
             };
         };
 
-        $actionContainer->method('get')
+        $this->actionContainer->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo('index'))
             ->willReturnCallback($action);
 
-        $application = new Application($actionContainer, '');
-
-        ob_start();
-        $application->run();
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertSame(static::SUCCESSFUL_MESSAGE, $content);
+        $this->assertSame($response, $this->application->run());
     }
 
     public function testActionNotFound(): void
     {
-        /** @var ActionContainer&MockObject */
-        $actionContainer = $this->getMockBuilder(ActionContainer::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $actionId = 'non-existing';
+        $_GET['action'] = $actionId;
 
-        $actionContainer->method('get')
-            ->willThrowException(new ActionNotFound());
+        $this->actionContainer->expects($this->once())
+            ->method('get')
+            ->with($this->equalTo($actionId))
+            ->willThrowException(new ActionNotFound(ActionNotFound::class . ': ' . $actionId));
 
-        $viewFolder = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'view';
-        $application = new Application($actionContainer, $viewFolder);
-
-        ob_start();
-        $application->run();
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertSame(static::ERROR_MESSAGE, $content);
+        $this->assertSame(
+            'Error: Mmm\Inert\Exception\ActionNotFound: non-existing',
+            $this->application->run()->getContent()
+        );
     }
 }

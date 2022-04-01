@@ -23,7 +23,7 @@ psalm:
 standards:
 	$(DOCKER) run --rm $(PHP) ./vendor/bin/php-cs-fixer fix --dry-run -v
 
-test: standards phpstan psalm coverage
+test: standards unit phpstan psalm mutation
 
 unit:
 	$(DOCKER) run --rm php74-cli ./vendor/bin/phpunit

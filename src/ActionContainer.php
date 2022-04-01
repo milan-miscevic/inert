@@ -5,49 +5,67 @@ declare(strict_types=1);
 namespace Mmm\Inert;
 
 use Closure;
+use Mmm\Inert\Exception\ActionNotFound;
+use Mmm\Inert\Exception\InvalidFactory;
+use Psr\Container\ContainerInterface;
 use Throwable;
 
-class ActionContainer
+class ActionContainer implements ContainerInterface
 {
-    /** @var (class-string<BaseAction>|BaseActionFactory|Closure)[] */
+    /** @var (class-string|Closure)[] */
     private array $factories;
 
     private ServiceContainer $serviceContainer;
-    private string $viewFolder;
+    private ?string $viewFolder;
 
     /**
-     * @param (class-string<BaseAction>|BaseActionFactory|Closure)[] $factories
+     * @param (class-string|Closure)[] $factories
      */
-    public function __construct(array $factories, ServiceContainer $serviceContainer, string $viewFolder)
+    public function __construct(array $factories, ServiceContainer $serviceContainer, ?string $viewFolder = null)
     {
         $this->factories = $factories;
         $this->serviceContainer = $serviceContainer;
         $this->viewFolder = $viewFolder;
     }
 
-    public function get(string $id): BaseAction
+    public function has(string $id): bool
     {
-        if (!isset($this->factories[$id])) {
-            throw new Exception\ActionNotFound();
+        return isset($this->factories[$id]);
+    }
+
+    public function get(string $id): Action
+    {
+        if (!$this->has($id)) {
+            throw new ActionNotFound(ActionNotFound::class . ': ' . $id);
         }
 
         try {
-            $factory = $this->factories[$id];
+            if ($this->factories[$id] instanceof Closure) {
+                /** @var Action $action */
+                $action = call_user_func_array($this->factories[$id], [$this->serviceContainer]);
+            } else {
+                /** @psalm-suppress MixedMethodCall */
+                $actionOrFactory = new $this->factories[$id]();
 
-            if (is_string($factory)) {
-                /** @psalm-suppress UnsafeInstantiation */
-                $factory = new $factory();
+                if ($actionOrFactory instanceof ServiceFactory) {
+                    /**
+                     * @var Action $action
+                     * @psalm-suppress UnnecessaryVarAnnotation
+                     */
+                    $action = call_user_func_array($actionOrFactory, [$this->serviceContainer]);
+                } else {
+                    /** @var Action $action */
+                    $action = $actionOrFactory;
+                }
             }
 
-            if ($factory instanceof BaseActionFactory || $factory instanceof Closure) {
-                $factory = call_user_func_array($factory, [$this->serviceContainer]);
+            if ($action instanceof Renderable) {
+                $action->setViewFolder($this->viewFolder);
             }
 
-            $factory->setViewFolder($this->viewFolder);
-
-            return $factory;
+            return $action;
         } catch (Throwable $ex) {
-            throw new Exception\InvalidFactory('', 0, $ex);
+            throw new InvalidFactory(InvalidFactory::class . ': ' . $ex->getMessage(), 0, $ex);
         }
     }
 }

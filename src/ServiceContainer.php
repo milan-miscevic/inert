@@ -5,42 +5,57 @@ declare(strict_types=1);
 namespace Mmm\Inert;
 
 use Closure;
+use Mmm\Inert\Exception\InvalidFactory;
+use Mmm\Inert\Exception\ServiceNotFound;
+use Psr\Container\ContainerInterface;
 use Throwable;
 
-class ServiceContainer
+class ServiceContainer implements ContainerInterface
 {
-    /** @var (class-string|BaseFactory|Closure)[] */
+    /** @var (class-string|Closure)[] */
     private array $factories;
 
     /**
-     * @param (class-string|BaseFactory|Closure)[] $factories
+     * @param (class-string|Closure)[] $factories
      */
     public function __construct(array $factories)
     {
         $this->factories = $factories;
     }
 
+    public function has(string $id): bool
+    {
+        return isset($this->factories[$id]);
+    }
+
     public function get(string $id): object
     {
-        if (!isset($this->factories[$id])) {
-            throw new Exception\ServiceNotFound();
+        if (!$this->has($id)) {
+            throw new ServiceNotFound(ServiceNotFound::class . ': ' . $id);
         }
 
         try {
-            $factory = $this->factories[$id];
-
-            if (is_string($factory)) {
+            if ($this->factories[$id] instanceof Closure) {
+                /** @var object $service */
+                $service = call_user_func_array($this->factories[$id], [$this]);
+            } else {
                 /** @psalm-suppress MixedMethodCall */
-                $factory = new $factory();
+                $serviceOrFactory = new $this->factories[$id]();
+
+                if ($serviceOrFactory instanceof ServiceFactory) {
+                    /**
+                     * @var object $service
+                     * @psalm-suppress UnnecessaryVarAnnotation
+                     */
+                    $service = call_user_func_array($serviceOrFactory, [$this]);
+                } else {
+                    $service = $serviceOrFactory;
+                }
             }
 
-            if ($factory instanceof BaseFactory || $factory instanceof Closure) {
-                $factory = call_user_func_array($factory, [$this]);
-            }
-
-            return $factory;
+            return $service;
         } catch (Throwable $ex) {
-            throw new Exception\InvalidFactory('', 0, $ex);
+            throw new InvalidFactory(InvalidFactory::class . ': ' . $ex->getMessage(), 0, $ex);
         }
     }
 }

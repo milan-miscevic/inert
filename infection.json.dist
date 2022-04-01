@@ -3,9 +3,12 @@
         "directories": ["src"]
     },
     "logs": {
-        "text": "./logs/infection.log"
+        "text": "./logs/infection.log",
+        "stryker": {
+            "report": "master"
+        }
     },
-    "tmpDir": "/app/logs",
+    "tmpDir": "./logs",
     "mutators": {
         "@default": true
     },

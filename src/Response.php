@@ -20,6 +20,19 @@ class Response
         $this->headers = $headers;
     }
 
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getHeaders(): array
+    {
+        return $this->headers;
+    }
+
     public function render(): void
     {
         foreach ($this->headers as $name => $value) {
