@@ -6,6 +6,7 @@
 [![GitHub Build](https://github.com/milan-miscevic/inert/workflows/Test/badge.svg?branch=master)](https://github.com/milan-miscevic/inert/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=milan-miscevic_inert&metric=alert_status)](https://sonarcloud.io/dashboard?id=milan-miscevic_inert)
 [![Type Coverage](https://shepherd.dev/github/milan-miscevic/inert/coverage.svg)](https://shepherd.dev/github/milan-miscevic/inert)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fmilan-miscevic%2Finert%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/milan-miscevic/inert/master)
 
 This repository provides a mini PHP framework with basic MVC and service container support. The name comes from the type of projects it is intended for - small and (almost) non-dynamic, or just inert.
 
