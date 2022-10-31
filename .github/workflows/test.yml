@@ -19,7 +19,7 @@ jobs:
           - "8.1"
 
     steps:
-      - uses: "shivammathur/setup-php@2.9.0"
+      - uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v2"
@@ -38,7 +38,7 @@ jobs:
           - "8.1"
 
     steps:
-      - uses: "shivammathur/setup-php@2.9.0"
+      - uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v2"
@@ -55,7 +55,7 @@ jobs:
           - "8.1"
 
     steps:
-      - uses: "shivammathur/setup-php@2.9.0"
+      - uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v2"
@@ -72,7 +72,7 @@ jobs:
           - "8.1"
 
     steps:
-      - uses: "shivammathur/setup-php@2.9.0"
+      - uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v2"
@@ -92,7 +92,7 @@ jobs:
           - "8.2"
 
     steps:
-      - uses: "shivammathur/setup-php@2.9.0"
+      - uses: "shivammathur/setup-php@2.22.0"
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v2"
