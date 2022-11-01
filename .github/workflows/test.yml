@@ -23,7 +23,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v3"
-      - uses: "php-actions/composer@v1"
+      - uses: "php-actions/composer@v6"
       - env:
           INFECTION_DASHBOARD_API_KEY: ${{ secrets.INFECTION_DASHBOARD_API_KEY }}
         run: "vendor/bin/infection --min-msi=80"
@@ -42,7 +42,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v3"
-      - uses: "php-actions/composer@v1"
+      - uses: "php-actions/composer@v6"
       - run: "vendor/bin/phpstan analyse"
 
   psalm:
@@ -59,7 +59,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v3"
-      - uses: "php-actions/composer@v1"
+      - uses: "php-actions/composer@v6"
       - run: "vendor/bin/psalm --show-info=true --shepherd"
 
   standards:
@@ -76,7 +76,7 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v3"
-      - uses: "php-actions/composer@v1"
+      - uses: "php-actions/composer@v6"
       - run: "vendor/bin/php-cs-fixer fix --dry-run -v"
 
   unit:
@@ -96,5 +96,5 @@ jobs:
         with:
           php-version: "${{ matrix.php-version }}"
       - uses: "actions/checkout@v3"
-      - uses: "php-actions/composer@v1"
+      - uses: "php-actions/composer@v6"
       - run: "vendor/bin/phpunit"
