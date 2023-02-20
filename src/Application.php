@@ -20,7 +20,10 @@ class Application
     public function run(): Response
     {
         try {
-            /** @phpstan-ignore-next-line */
+            /**
+             * @phpstan-ignore-next-line
+             * @psalm-suppress PossiblyInvalidCast
+             */
             $name = (string) ($_GET['action'] ?? 'index');
             $response = $this->actionContainer->get($name)->run();
         } catch (Exception $ex) {

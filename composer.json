@@ -23,7 +23,7 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8",
+        "php": "^8",
         "psr/container": "^2.0.2"
     },
     "require-dev": {
