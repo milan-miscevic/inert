@@ -1,5 +1,5 @@
 DOCKER=docker-compose -f ./docker/docker-compose.yml
-PHP=php82-cli
+PHP=php80-cli
 
 cli:
 	$(DOCKER) run $(PHP) bash
@@ -24,11 +24,11 @@ psalm:
 	$(DOCKER) run --rm $(PHP) ./vendor/bin/psalm --show-info=true
 
 standards:
-	$(DOCKER) run -e PHP_CS_FIXER_IGNORE_ENV=1 --rm  $(PHP) ./vendor/bin/php-cs-fixer fix --dry-run -v
+	$(DOCKER) run --rm $(PHP) ./vendor/bin/php-cs-fixer fix --dry-run -v
 
 test: standards unit phpstan psalm mutation
 
 unit:
-	$(DOCKER) run --rm php80-cli ./vendor/bin/phpunit
-	$(DOCKER) run --rm php81-cli ./vendor/bin/phpunit
 	$(DOCKER) run --rm $(PHP) ./vendor/bin/phpunit
+	$(DOCKER) run --rm php81-cli ./vendor/bin/phpunit
+	$(DOCKER) run --rm php82-cli ./vendor/bin/phpunit
