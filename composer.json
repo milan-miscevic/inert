@@ -23,16 +23,16 @@
         }
     ],
     "require": {
-        "php": "^8",
+        "php": "^8.0",
         "psr/container": "^2.0.2"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.11.0",
-        "infection/infection": "^0.26.14",
-        "phpstan/phpstan": "^1.8.5",
-        "phpstan/phpstan-strict-rules": "^1.1",
-        "phpunit/phpunit": "^9.5.19",
-        "vimeo/psalm": "^5.0.0"
+        "friendsofphp/php-cs-fixer": "^3.14",
+        "infection/infection": "^0.26.19",
+        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan-strict-rules": "^1.4",
+        "phpunit/phpunit": "^9.6",
+        "vimeo/psalm": "^5.7"
     },
     "autoload": {
         "psr-4": {
