@@ -20,7 +20,7 @@ jobs:
       - uses: "shivammathur/setup-php@2.25.1"
         with:
           php-version: "${{ matrix.php-version }}"
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - uses: "php-actions/composer@v6"
       - env:
           INFECTION_DASHBOARD_API_KEY: ${{ secrets.INFECTION_DASHBOARD_API_KEY }}
@@ -37,7 +37,7 @@ jobs:
       - uses: "shivammathur/setup-php@2.25.1"
         with:
           php-version: "${{ matrix.php-version }}"
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - uses: "php-actions/composer@v6"
       - run: "vendor/bin/phpstan analyse"
 
@@ -52,7 +52,7 @@ jobs:
       - uses: "shivammathur/setup-php@2.25.1"
         with:
           php-version: "${{ matrix.php-version }}"
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - uses: "php-actions/composer@v6"
       - run: "vendor/bin/psalm --show-info=true --shepherd"
 
@@ -67,7 +67,7 @@ jobs:
       - uses: "shivammathur/setup-php@2.25.1"
         with:
           php-version: "${{ matrix.php-version }}"
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - uses: "php-actions/composer@v6"
       - run: "vendor/bin/php-cs-fixer fix --dry-run -v"
 
@@ -84,6 +84,6 @@ jobs:
       - uses: "shivammathur/setup-php@2.25.1"
         with:
           php-version: "${{ matrix.php-version }}"
-      - uses: "actions/checkout@v3"
+      - uses: "actions/checkout@v4"
       - uses: "php-actions/composer@v6"
       - run: "vendor/bin/phpunit"
